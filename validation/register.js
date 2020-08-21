@@ -5,7 +5,7 @@ module.exports = function validateSignUp(user){
     let errors = {}
 
     data.name = data.name ?? ''
-    data.username = data.username ?? ''
+    data.email = data.email ?? ''
     data.password = data.password ?? ''
     data.password2 = data.password2 ?? ''
     
@@ -13,10 +13,10 @@ module.exports = function validateSignUp(user){
     if(Validator.isEmpty(data.name)){
         errors.name = "Name field is required"
     }
-    //Username Validation
-    if(Validator.isEmpty(data.username)){
-        errors.username = "Username field is required"
-    }
+    // //Username Validation
+    // if(Validator.isEmpty(data.username)){
+    //     errors.username = "Username field is required"
+    // }
 
     //Email Validation
     if(Validator.isEmpty(data.email)){

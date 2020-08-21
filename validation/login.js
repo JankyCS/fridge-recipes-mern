@@ -1,16 +1,16 @@
 const Validator = require('validator')
 const isEmpty = require("is-empty");
 
-module.exports = function validateSignUp(user){
+module.exports = function validateLogin(user){
     let errors = {}
 
-    data.username = data.username ?? ''
+    data.email = data.email ?? ''
     data.password = data.password ?? ''
    
-    //Username Validation
-    if(Validator.isEmpty(data.username)){
-        errors.username = "Username field is required"
-    }
+    // //Username Validation
+    // if(Validator.isEmpty(data.username)){
+    //     errors.username = "Username field is required"
+    // }
 
     //Email Validation
     if(Validator.isEmpty(data.email)){
