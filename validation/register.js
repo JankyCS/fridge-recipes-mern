@@ -1,13 +1,13 @@
 const Validator = require('validator')
 const isEmpty = require("is-empty");
 
-module.exports = function validateSignUp(user){
+module.exports = function validateSignUp(data){
     let errors = {}
 
-    data.name = data.name ?? ''
-    data.email = data.email ?? ''
-    data.password = data.password ?? ''
-    data.password2 = data.password2 ?? ''
+    data.name = !isEmpty(data.name) ? data.name : "";
+    data.email = !isEmpty(data.email) ? data.email : "";
+    data.password = !isEmpty(data.password) ? data.password : "";
+    data.password2 = !isEmpty(data.password2) ? data.password2 : "";
     
     //Name Validation
     if(Validator.isEmpty(data.name)){
@@ -29,7 +29,7 @@ module.exports = function validateSignUp(user){
     if(Validator.isEmpty(data.password)){
         errors.password = "Password Required"
     }
-    else if(!Validator.isLength({min:6})){
+    else if(!Validator.isLength(data.password,{min:6})){
         errors.password = "Password must be at least 6 characters"
     }
     else if(Validator.isEmpty(data.password2)){
