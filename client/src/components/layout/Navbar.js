@@ -8,7 +8,6 @@ import {
 class Navbar extends Component {
   render() {
     return (
-    <Router>
       <div className="navbar-fixed">
         <nav className="z-depth-0">
           <div className="nav-wrapper white">
@@ -25,7 +24,6 @@ class Navbar extends Component {
           </div>
         </nav>
       </div>
-      </Router>
     );
   }
 }

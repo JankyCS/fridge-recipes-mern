@@ -5,10 +5,12 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import {LoginContext} from "../LoginContext";
+
 class Landing extends Component {
   render() {
     return (
-    <Router>
+    //<Router>
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
@@ -50,8 +52,11 @@ class Landing extends Component {
             </div>
           </div>
         </div>
+        <LoginContext.Consumer>
+            {value => <p>{JSON.stringify(value)}</p>}
+            </LoginContext.Consumer>
       </div>
-      </Router>
+      //</Router>
     );
   }
 }
