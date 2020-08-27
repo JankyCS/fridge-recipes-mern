@@ -5,6 +5,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import {LoginContext} from "../LoginContext";
+
 class Navbar extends Component {
   render() {
     return (
@@ -21,6 +23,24 @@ class Navbar extends Component {
               <i className="material-icons">code</i>
               MERN
             </Link>
+            <LoginContext.Consumer>
+            {context => {
+                return (
+                    <button
+                    onClick={context.toggleLogout}
+                    style={{
+                    width: "140px",
+                    borderRadius: "3px",
+                    letterSpacing: "1.5px"
+                    }}
+                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                >
+                    Logout
+                </button>
+                )
+            }}
+            
+              </LoginContext.Consumer>
           </div>
         </nav>
       </div>

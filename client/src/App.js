@@ -29,28 +29,123 @@ const UserContext = React.createContext()
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.toggleLogin = (token) => {
+      localStorage.setItem("jwtToken", token);
       console.log("Toggling Login")
-
+      const decoded = jwt_decode(token);
 
       this.setState(state => ({
-        loggedIn: !state.loggedIn,
+        loggedIn: true,
         token: token
       }));
     };
+
+    this.toggleLogout = () => {
+      localStorage.removeItem("jwtToken");
+      console.log("Logging out")
+      //const decoded = jwt_decode(token);
+
+      this.setState(state => ({
+        loggedIn: false,
+        token: null
+      }));
+    };
+    
+    let t = localStorage.jwtToken;
+
+    const tokenData = {
+      token: t
+    };
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(tokenData)
+    }
+
+    console.log("T is"+t)
+
+    if(t!=null){
+      console.log("hereee")
+      fetch('/api/users/refresh', requestOptions)
+        .then(response => {
+          const r = response.json()
+            if(response.ok){
+                console.log("Good")
+                //this.props.history.push("/login");
+            }
+            return r
+        })
+        .then(data => {
+            console.log("Refresh Data is "+JSON.stringify(data))
+            if(data.success){
+              localStorage.setItem("jwtToken", data.token);
+               
+            }else{
+              localStorage.removeItem("jwtToken");
+              
+            }
+             t = localStorage.jwtToken;
+             return t
+        })
+        .then((t)=>{
+          console.log(t)
+
+          if(this.state){
+            this.setState(state => ({
+              loggedIn:localStorage.jwtToken ? true : false,
+              token: t
+            }));
+          }
+          else{
+            this.state = {
+                loggedIn:localStorage.jwtToken ? true : false,
+                toggleLogin: this.toggleLogin,
+                toggleLogout: this.toggleLogout,
+                token: t
+              }
+          }
+        })
+    }
+    this.state = {
+        loggedIn:localStorage.jwtToken ? true : false,
+        toggleLogin: this.toggleLogin,
+        toggleLogout: this.toggleLogout,
+        token: t
+      }
+    
+    // const now = new Date()
+    // if(t&&jwt_decode(t).exp*1000 < now.getTime())
+    // {
+    //   console.log("expired")
+    //   localStorage.removeItem("jwtToken")
+    // }
+    // else
+    // {
+    //   console.log("not expired yet")
+    // }
+
+    //In backend,
      // State also contains the updater function so it will
     // be passed down into the context provider
-    this.state = {
-      loggedIn:false,
-      toggleLogin: this.toggleLogin,
-      token:""
-    }
+    
   }
 
 
 
+
   render() {
+    console.log("Currently stored exp date is ")
+     var created = ""
+    var expires = ""
+    var t = ""
+    if(this.state.token){
+      created = new Date(jwt_decode(this.state.token).iat*1000)
+      expires = new Date(jwt_decode(this.state.token).exp*1000)
+      t = localStorage.jwtToken
+    }
+
+   
     return (
       <LoginContext.Provider value={this.state}>
         <Router>
@@ -62,9 +157,18 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route path="/" render={()=><p>404 Page not found</p>} />
             </Switch>
-            {/* <LoginContext.Consumer>
-            {value => <p>{JSON.stringify(value)}</p>}
-            </LoginContext.Consumer> */}
+            <LoginContext.Consumer>
+            {value => {
+              
+              return (
+                <div>
+                <p>{JSON.stringify(t)}</p>
+                <p>Created:{created.toString()}</p>
+                <p>Expire:{expires.toString()}</p>
+                </div>
+              )}
+            }
+            </LoginContext.Consumer>
           </div>
         </Router>
       </LoginContext.Provider>

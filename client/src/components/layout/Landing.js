@@ -51,10 +51,9 @@ class Landing extends Component {
               </Link>
             </div>
           </div>
+          
         </div>
-        <LoginContext.Consumer>
-            {value => <p>{JSON.stringify(value)}</p>}
-            </LoginContext.Consumer>
+       
       </div>
       //</Router>
     );

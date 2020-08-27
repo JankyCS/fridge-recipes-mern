@@ -143,9 +143,7 @@ render() {
             {this.state.data !=null ? <p>{JSON.stringify(this.state.data)}</p> : null}
           </div>
         </div>
-        <LoginContext.Consumer>
-            {value => <p>{JSON.stringify(value)}</p>}
-        </LoginContext.Consumer>
+        
       </div>
     );
   }

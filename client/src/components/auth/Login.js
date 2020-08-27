@@ -20,7 +20,6 @@ onChange(e) {
     this.setState({ [e.target.id]: e.target.value });
   };
 onSubmit(e) {
-
     const {toggleLogin} = this.context;
     e.preventDefault();
     const userData = {
@@ -117,9 +116,7 @@ render() {
             </span>
           </div>
         </div>
-        <LoginContext.Consumer>
-            {value => <p>{JSON.stringify(value)}</p>}
-        </LoginContext.Consumer>
+        
       </div>
     );
   }

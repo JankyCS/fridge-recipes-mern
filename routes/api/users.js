@@ -24,7 +24,8 @@ router.post("/register", (req, res) => {
         const newUser = new User({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            fridge: ["rice","water"]
         });
         // Hash password before saving in database
         bcrypt.genSalt(10, (err, salt) => {
@@ -70,12 +71,12 @@ router.post("/login", (req, res) => {
             payload,
             keys.secretOrKey,
             {
-                expiresIn: 31556926 // 1 year in seconds
+                expiresIn: 604800 // 1 year in seconds
             },
             (err, token) => {
                 res.json({
                     success: true,
-                    token: "Bearer " + token,
+                    token: token//"Bearer " + token,
                     // id:user.id,
                     // name:user.name
                 });
@@ -89,5 +90,54 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+router.post("/refresh", (req, res) => {
+    // Form validation
+
+    const token = req.body.token;
+
+    jwt.verify(token,keys.secretOrKey, (err,decoded) =>{
+      if(err){
+        console.log(err)
+        return res
+          .status(400)
+          .json({ error: "Invallid/Expired Token" });
+      }
+      else{
+        const payload = {
+          id: decoded.id,
+          name: decoded.name
+        };
+
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {
+              expiresIn: 604800 // 1 year in seconds
+          },
+          (err, token) => {
+              if(err)
+              {
+                return res
+                  .status(400)
+                  .json({ error: "Yeah :/" });
+              }
+              
+              else{
+              
+                  return res.json({
+                    success: true,
+                    decoded,
+                    token: token//"Bearer " + token,
+                  });
+              }
+              
+          }
+        );
+      }
+    })
+  });
+
+
 
 module.exports = router;
