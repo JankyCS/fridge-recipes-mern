@@ -127,13 +127,98 @@ router.post("/refresh", (req, res) => {
               
                   return res.json({
                     success: true,
-                    decoded,
+                    //decoded,
                     token: token//"Bearer " + token,
                   });
               }
               
           }
         );
+      }
+    })
+  });
+
+router.post("/edit-fridge", (req, res) => {
+    // Form validation
+
+    const {token, food} = req.body;
+    var newFridge
+
+    if(!food){
+      newFridge = []
+    }
+    try {
+      newFridge = food.split(',')
+    } catch (error) {
+      console.log(error)
+      newFridge=[]
+    }
+    
+
+
+    jwt.verify(token,keys.secretOrKey, (err,decoded) =>{
+      if(err){
+        console.log(err)
+        return res
+          .status(400)
+          .json({ error: "Invallid/Expired Token" });
+      }
+      else{
+        // const payload = {
+        //   id: decoded.id,
+        //   name: decoded.name
+        // };
+        console.log(decoded.name)
+        var user_id = decoded.id; 
+        console.log(user_id)
+        User.findByIdAndUpdate(user_id, { fridge: newFridge }, 
+          function (err, docs) { 
+            if (err){ 
+              return res
+                .status(400)
+                .json({ error: err});
+                console.log(err) 
+            } 
+            else{ 
+              console.log("Updated User : ", docs); 
+              return res.json({
+                success: true
+              });
+                
+            } 
+        });
+      }
+    })
+  });
+
+  router.post("/get-fridge", (req, res) => {
+
+    const {token} = req.body;
+    jwt.verify(token,keys.secretOrKey, (err,decoded) =>{
+      if(err){
+        console.log(err)
+        return res
+          .status(400)
+          .json({ error: "Invallid/Expired Token" });
+      }
+      else{
+        // const payload = {
+        //   id: decoded.id,
+        //   name: decoded.name
+        // };
+        console.log(decoded.name)
+        var user_id = decoded.id; 
+        console.log(user_id)
+        User.findById(user_id, function(err, user) {
+          if(err){
+            res
+            .status(400)
+            .json({ error: err });
+          }
+          res.json({
+            fridge: user.fridge
+          })
+        });
       }
     })
   });
