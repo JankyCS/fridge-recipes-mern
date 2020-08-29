@@ -49,6 +49,7 @@ onSubmit(e) {
                 if(data.success==true){
                     console.log("Signed in")
                     toggleLogin(data.token)
+                     this.props.history.push("/fridge");
                 }
             }
         })

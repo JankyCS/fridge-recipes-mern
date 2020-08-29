@@ -8,6 +8,7 @@ import {
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
+import FridgePage from "./components/layout/FridgePage";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import {LoginContext} from "./components/LoginContext";
@@ -65,7 +66,15 @@ class App extends Component {
 
     console.log("T is"+t)
 
-    if(t!=null){
+    const decoded = jwt_decode(t)
+
+    const expDate = new Date(decoded.exp*1000)
+    const now = new Date()
+
+    console.log("decoded is"+(expDate-now))
+
+    //if(decoded.exp*1000)
+    if(t!=null && expDate-now<259200000){
       console.log("hereee")
       fetch('/api/users/refresh', requestOptions)
         .then(response => {
@@ -91,7 +100,7 @@ class App extends Component {
         .then((t)=>{
           console.log(t)
 
-          if(this.state){
+          if(this.state && this._ismounted){
             this.setState(state => ({
               loggedIn:localStorage.jwtToken ? true : false,
               token: t
@@ -139,6 +148,8 @@ class App extends Component {
      var created = ""
     var expires = ""
     var t = ""
+
+
     if(this.state.token){
       created = new Date(jwt_decode(this.state.token).iat*1000)
       expires = new Date(jwt_decode(this.state.token).exp*1000)
@@ -155,6 +166,7 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/fridge" component={FridgePage} />
               <Route path="/" render={()=><p>404 Page not found</p>} />
             </Switch>
             <LoginContext.Consumer>
