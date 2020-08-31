@@ -76,7 +76,7 @@ class Autocomplete extends Component {
                 //Add to fridge then reset state
                 this.setState({value:"",suggestions:[]})
                 
-            }} >{suggestion}</li>)}</ul>
+            }} style={{cursor: "pointer"}}>{suggestion}</li>)}</ul>
         }
         return null
     }
@@ -108,6 +108,8 @@ class Autocomplete extends Component {
         )
     }
 
+    
+
   render() {
     
     return (
@@ -120,7 +122,7 @@ class Autocomplete extends Component {
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
                 <small id="emailHelp" classname="form-text text-muted">We'll never share your email with anyone else.</small>
             </div> */}
-            <a href="" className="material-icons addButton" onClick={()=>{}}>add_circle_outline</a>
+            <a href="" className="material-icons addButton" onClick={this.onSubmit}>add_circle_outline</a>
             
             {this.showSuggestions()}    
         </form>
