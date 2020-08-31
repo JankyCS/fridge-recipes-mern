@@ -69,7 +69,7 @@ class FridgePage extends Component {
                 
             </h1>
             <Autocomplete/>
-            <Ingredient/>
+            <Ingredient name="test test "/>
             {this.state.fridge?this.state.fridge.toString():<p>Loading</p>}
           </div>
           <div className="col-md-8">

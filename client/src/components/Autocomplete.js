@@ -76,7 +76,7 @@ class Autocomplete extends Component {
                 //Add to fridge then reset state
                 this.setState({value:"",suggestions:[]})
                 
-            }}>{suggestion}</li>)}</ul>
+            }} >{suggestion}</li>)}</ul>
         }
         return null
     }
@@ -112,14 +112,16 @@ class Autocomplete extends Component {
     
     return (
     //<Router>
-      <div>
-        <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} >
+      <div >
+        <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} style={{float:"left"}}>
             <input ref={this.searchInput} value={this.state.value} onChange={this.onChange}type="text"/> {/*onBlur={this.hideSuggestions}*/} 
             {/* <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
                 <small id="emailHelp" classname="form-text text-muted">We'll never share your email with anyone else.</small>
             </div> */}
+            <a href="" className="material-icons addButton" onClick={()=>{}}>add_circle_outline</a>
+            
             {this.showSuggestions()}    
         </form>
       </div>
