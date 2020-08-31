@@ -30,7 +30,7 @@ class Autocomplete extends Component {
     onChange(e){
         const ingredients = this.ingredients
         let value = e ? e.target.value :this.state.value
-        value = value.replace(/[^a-zA-Z]/g, "");
+        value = value.replace(/[^a-zA-Z]/g, " ");
         this.setState({value}, () => {
 
             setTimeout(() => {
@@ -113,8 +113,8 @@ class Autocomplete extends Component {
     return (
     //<Router>
       <div>
-        <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit}>
-            <input ref={this.searchInput} value={this.state.value} onChange={this.onChange} onBlur={this.hideSuggestions} type="text"/>
+        <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} >
+            <input ref={this.searchInput} value={this.state.value} onChange={this.onChange}type="text"/> {/*onBlur={this.hideSuggestions}*/} 
             {/* <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>

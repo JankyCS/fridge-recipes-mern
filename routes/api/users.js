@@ -199,7 +199,7 @@ router.post("/edit-fridge", (req, res) => {
         console.log(err)
         return res
           .status(400)
-          .json({ error: "Invallid/Expired Token" });
+          .json({ error: "Invallid/Expired Token"});
       }
       else{
         // const payload = {

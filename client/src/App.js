@@ -169,7 +169,7 @@ class App extends Component {
               <Route exact path="/fridge" component={FridgePage} />
               <Route path="/" render={()=><p>404 Page not found</p>} />
             </Switch>
-            <LoginContext.Consumer>
+            {/* <LoginContext.Consumer>
             {value => {
               
               return (
@@ -180,7 +180,7 @@ class App extends Component {
                 </div>
               )}
             }
-            </LoginContext.Consumer>
+            </LoginContext.Consumer> */}
           </div>
         </Router>
       </LoginContext.Provider>

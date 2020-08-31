@@ -2,26 +2,32 @@
   width:100%;
   /* border: 1px solid grey; */
   box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px 1px rgba(0,0,0,0.18);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .AutoCompleteText input{
   /* padding-left: 10px; */
   width:100%;
   border:none;
-  /* border-bottom: 1px solid lightskyblue; */
-  font-size: 14px;
-  padding: 10px 20px;
+  border-bottom: 1px solid transparent;
+  font-size: 12px;
+  padding: 5px 20px;
 }
 .AutoCompleteText input:focus{
   width:100%;
   outline: none !important;
   border:none;
   border-bottom: 1px solid lightgrey;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .AutoCompleteText ul{
+  /* width:100%; */
+  /* width:40vh; */
+  left: 14px;
+  right: 14px;
+  position:absolute;
+  border: 1px solid #d4d4d4;
   list-style-type: none;
   text-align: left;
   padding:0;
@@ -30,12 +36,22 @@
 }
 
 .AutoCompleteText li{
- padding: 10px 20px;
+  background-color: white;
+ padding: 5px 20px;
 }
 
 .AutoCompleteText li:hover{
   background-color: lightgrey;
   text-decoration: underline;
+}
+
+.deleteButton{
+  border-radius: 0px .20rem .20rem 0 !important
+}
+
+td{
+  padding:0;
+  height:0
 }
 
 /* .App {

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import {LoginContext} from "../LoginContext";
 import Autocomplete from "../Autocomplete"
-
+import Ingredient from "./Ingredient"
 class FridgePage extends Component {
 
     constructor(props){
@@ -62,16 +62,17 @@ class FridgePage extends Component {
     return (
     //<Router>
       <div className="container-fluid">
-        <div style={{height: "80vh"}}  className="row">
-          <div style={{height: "100%"}} className="col-sm-4 overflow-auto">
+        <div  className="row">
+          <div style={{minHeight: 300}} className="col-md-4 overflow-auto">
             <h1>
                 Fridge
                 
             </h1>
             <Autocomplete/>
+            <Ingredient/>
             {this.state.fridge?this.state.fridge.toString():<p>Loading</p>}
           </div>
-          <div className="col-sm-8">
+          <div className="col-md-8">
             <h1>
                 Recipes Section
             </h1>
