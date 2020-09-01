@@ -54,8 +54,15 @@ class FridgePage extends Component {
         })
         .then(data => {
             if(!data.error){
-                console.log("Data is "+JSON.stringify(data))
-                this.setState({fridge:data.fridge})
+                console.log(data.fridge.length)
+                console.log("Data is p"+JSON.stringify(data))
+                if(data.fridge.length==1 && data.fridge[0].length==0){
+                    this.setState({fridge:[]})
+                }
+                else{
+                  this.setState({fridge:data.fridge},this.getRecipes())
+
+                }
             }
             else{
               this.context.toggleLogout()
@@ -125,33 +132,39 @@ class FridgePage extends Component {
   getRecipes(){
     if(this.context.loggedIn){
       console.log("pog???")
+
+      const {token} = this.context
+      const userData = {
+          token,
+          assumePantryItems:1
+      };
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData)
+      }
+      fetch('/api/users/get-recipes', requestOptions)
+      .then(response => {
+      const r = response.json()
+          if(response.ok){
+              //console.log("Good")
+              //this.props.history.push("/login");
+          }
+          return r
+      })
+      .then(data => {
+          if(true){
+              console.log("Recipes is "+JSON.stringify(data))
+              this.setState({recipes:data})
+          
+          }
+        })
       // console.log("Will it reach here?api key is "+process.env.REACT_APP_SPOONACULAR)
     }
     else{
       console.log("nope not loggedIn")
     }
-    // const url = "https://api.spoonacular.com/recipes/findByIngredients?"+
-    //             "apiKey="+process.env.REACT_APP_SPOONACULAR+
-    //             "&ingredients="+"rice,dates"+
-    //             "&number=10"
-
-    // fetch(url)
-    // .then(response => {
-    // const r = response.json()
-    //     if(response.ok){
-    //         //console.log("Good")
-    //         //this.props.history.push("/login");
-    //     }
-    //     return r
-    // })
-    // .then(data => {
-    //     if(true){
-    //         console.log("Recipes is "+JSON.stringify(data))
-    //     }
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
+    
   }
 
   render() {
@@ -162,7 +175,7 @@ class FridgePage extends Component {
     //     this.props.history.push("/");
     // }
 
-    this.getRecipes()
+    // this.getRecipes()
 
 
     return (
@@ -185,6 +198,7 @@ class FridgePage extends Component {
             <h1>
                 Recipes Section
             </h1>
+            {this.state.recipes?JSON.stringify(this.state.recipes[0]):<p>Loading</p>}
           </div>
           
         </div>

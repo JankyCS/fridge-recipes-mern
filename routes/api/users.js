@@ -232,7 +232,9 @@ router.post("/edit-fridge", (req, res) => {
   });
 
   router.post("/get-recipes", (req, res) => {
-    const {token} = req.body;
+    const {token,assumePantryItems} = req.body;
+    const pantry = assumePantryItems==1? true : false
+
     jwt.verify(token,process.env.secretOrKey, (err,decoded) =>{
       if(err){
         console.log(err)
@@ -258,9 +260,11 @@ router.post("/edit-fridge", (req, res) => {
           else{
             const url = "https://api.spoonacular.com/recipes/findByIngredients?"+
                         "apiKey="+process.env.SPOONACULAR_KEY+
-                        "&ingredients="+"rice,dates"+
-                        "&number=10"
-
+                        "&ingredients="+user.fridge.toString()+
+                        "&number=1"+
+                        "&ignorePantry="+pantry
+            console.log("The url is "+url)
+            // console.log("As a string:"+user.fridge.toString())
             fetch(url)
             .then(response => {
             const r = response.json()
@@ -272,7 +276,7 @@ router.post("/edit-fridge", (req, res) => {
             })
             .then(data => {
                 if(true){
-                    console.log("Recipes is "+JSON.stringify(data))
+                    // console.log("Recipes is "+JSON.stringify(data))
                 }
                 res.json(data)
             })
