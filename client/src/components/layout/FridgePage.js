@@ -19,6 +19,8 @@ class FridgePage extends Component {
           fridge:null
       }
       this.updateFridge = this.updateFridge.bind(this)
+      this.addToFridge = this.addToFridge.bind(this)
+      this.removeFromFridge = this.removeFromFridge.bind(this)
 
   };
     
@@ -44,11 +46,8 @@ class FridgePage extends Component {
         .then(data => {
             if(true){
                 console.log("Data is "+JSON.stringify(data))
-                this.setState({fridge:data.fridge})
-            
+                this.setState({fridge:data.fridge.sort()})
             }
-
-
          })
     };
 
@@ -76,10 +75,36 @@ class FridgePage extends Component {
     .then(data => {
         if(true){
             console.log("Data is "+JSON.stringify(data))
-            this.setState({fridge:data.fridge})
+            //this.setState({fridge:data.fridge.sort()})
         
         }
       })
+  }
+
+  addToFridge(food){
+    console.log(food)
+    this.setState((prev)=>{
+      
+      let f =[...prev.fridge,food.toLowerCase()]
+      f.sort()
+      return {
+        fridge: f
+      }
+    },()=>{this.updateFridge()})
+  }
+
+  removeFromFridge(food){
+    console.log(food)
+    this.setState((prev)=>{
+      
+      let f =[...prev.fridge]
+      const index = f.indexOf(food)
+      f.splice(index,1)
+      // f.sort()
+      return {
+        fridge: f
+      }
+    },()=>{this.updateFridge()})
   }
 
   render() {
@@ -99,19 +124,11 @@ class FridgePage extends Component {
                 Fridge
                 
             </h1>
-            <Autocomplete/>
+            <Autocomplete add={this.addToFridge}/>
 
             {
-               this.state.fridge?this.state.fridge.map(item => <Ingredient key={item} name={item}/>):<p>Load</p>
+               this.state.fridge?this.state.fridge.map(item => <Ingredient key={item} name={item} remove={this.removeFromFridge}/>):<p>Load</p>
             }
-            {
-               this.state.fridge?this.state.fridge.map(item => <Ingredient name={item}/>):<p>Load</p>
-            }
-            {
-               this.state.fridge?this.state.fridge.map(item => <Ingredient name={item}/>):<p>Load</p>
-            }
-            
-            <Ingredient name="test test "/>
             {this.state.fridge?this.state.fridge.toString():<p>Loading</p>}
           </div>
           <div className="col-md-8">

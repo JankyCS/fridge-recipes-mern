@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ingredientJSON from "../ingredients"
+import ingredientJSON from "../newIngredients.json"
 import ReactDOM from "react-dom"
 // import {
 //   BrowserRouter as Router,
@@ -25,10 +25,13 @@ class Autocomplete extends Component {
         this.showSuggestions = this.showSuggestions.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.hideSuggestions = this.hideSuggestions.bind(this)
+        this.addToFridge = this.addToFridge.bind(this)
     }
 
     onChange(e){
         const ingredients = this.ingredients
+
+        console.log(ingredients[0]['name'])
         let value = e ? e.target.value :this.state.value
         value = value.replace(/[^a-zA-Z]/g, " ");
         this.setState({value}, () => {
@@ -43,10 +46,10 @@ class Autocomplete extends Component {
                     //suggestions = ingredients.filter(v => regex.test(v))
                     for(let i=0 ;i<ingredients.length; i++)
                     {
-                        if (ingredients[i].indexOf(value.toLowerCase()) == 0) {
+                        if (ingredients[i]['name'].indexOf(value.toLowerCase()) == 0) {
                             first.push(ingredients[i]);
                         }
-                        else if(regex.test(ingredients[i])){
+                        else if(regex.test(ingredients[i]['name'])){
                             others.push(ingredients[i])
                         }
                         if(first.length>6){
@@ -71,41 +74,53 @@ class Autocomplete extends Component {
     showSuggestions(){
         const {suggestions} = this.state
         if(this.state.suggestions.length>0){
-            return <ul>{suggestions.map(suggestion => <li key={suggestion} onClick={()=>{
+            return <ul>{suggestions.map(suggestion => <li key={suggestion['id']} onClick={()=>{
 
                 //Add to fridge then reset state
-                this.setState({value:"",suggestions:[]})
+                this.addToFridge(suggestion['name'])
+                this.setState({value:'',suggestions:[]})
                 
-            }} style={{cursor: "pointer"}}>{suggestion}</li>)}</ul>
+                
+            }} style={{cursor: "pointer"}}>{suggestion['name']}</li>)}</ul>
         }
         return null
     }
 
     onSubmit(e) {
         e.preventDefault();
-        console.log(e.target.value)
+        this.addToFridge(this.state.value)
+        //console.log(this.state.value)
 
         //Add e.target.value to fridge, then reset state
-        this.setState(
-            {
-                value: "",
-                suggestions: []
-            }
-        )
+        
 
         //Remove focus after use enters an ingredient 
         //Maybe remove this? Keeping focus makes it easy to input many ingredients consecutively
         this.searchInput.current.blur()
-
     };
+
+    addToFridge(value){
+        if(value.length>0){
+            this.props.add(value)
+
+            this.setState({
+                value: "",
+                suggestions: []
+            })
+        }
+        
+    }
     
     hideSuggestions(e) {
         e.preventDefault();
-        this.setState(
+        setTimeout(() => {
+            this.setState(
             {
                 suggestions: []
             }
         )
+        }, 100);
+        
     }
 
     
@@ -116,7 +131,7 @@ class Autocomplete extends Component {
     //<Router>
       <div >
         <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} style={{float:"left"}}>
-            <input ref={this.searchInput} value={this.state.value} onChange={this.onChange}type="text"/> {/*onBlur={this.hideSuggestions}*/} 
+            <input ref={this.searchInput} value={this.state.value} onChange={this.onChange}type="text" onBlur={this.hideSuggestions}/> {/*onBlur={this.hideSuggestions}*/} 
             {/* <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
