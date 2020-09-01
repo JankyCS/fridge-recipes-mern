@@ -19,141 +19,18 @@ class FridgePage extends Component {
       //const {token} = this.context;
       // this.showFridge = this.showFridge.bind(this)
       this.state = {
-          fridge:null
+          fridge:null,
+          query:""
       }
 
-      this.testRecipe = {
-        "id": 666439,
-        "title": "Homemade Ricotta",
-        "image": "https://spoonacular.com/recipeImages/666439-312x231.jpg",
-        "imageType": "jpg",
-        "usedIngredientCount": 2,
-        "missedIngredientCount": 1,
-        "missedIngredients": [
-            {
-                "id": 1049,
-                "amount": 3,
-                "unit": "cups",
-                "unitLong": "cups",
-                "unitShort": "cup",
-                "aisle": "Milk, Eggs, Other Dairy",
-                "name": "half & half",
-                "original": "3 cups half & half",
-                "originalString": "3 cups half & half",
-                "originalName": "half & half",
-                "metaInformation": [],
-                "meta": [],
-                "image": "https://spoonacular.com/cdn/ingredients_100x100/fluid-cream.jpg"
-            }
-        ],
-        "usedIngredients": [
-            {
-                "id": 1077,
-                "amount": 5,
-                "unit": "cups",
-                "unitLong": "cups",
-                "unitShort": "cup",
-                "aisle": "Milk, Eggs, Other Dairy",
-                "name": "full-fat milk",
-                "original": "5 cups full-fat buttermilk",
-                "originalString": "5 cups full-fat buttermilk",
-                "originalName": "full-fat buttermilk",
-                "metaInformation": [],
-                "meta": [],
-                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
-            },
-            {
-                "id": 1077,
-                "amount": 5,
-                "unit": "qt",
-                "unitLong": "quarts",
-                "unitShort": "qt",
-                "aisle": "Milk, Eggs, Other Dairy",
-                "name": "whole milk",
-                "original": "5 qt. whole milk",
-                "originalString": "5 qt. whole milk",
-                "originalName": "whole milk",
-                "metaInformation": [
-                    "whole"
-                ],
-                "meta": [
-                    "whole"
-                ],
-                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
-            }
-        ],
-        "unusedIngredients": [],
-        "likes": 1564
-    }
-
-    this.testRecipe2 = {
-        "id": 600531,
-        "title": "Instant khoya – Quick and easy mawa",
-        "image": "https://spoonacular.com/recipeImages/600531-312x231.jpg",
-        "imageType": "jpg",
-        "usedIngredientCount": 2,
-        "missedIngredientCount": 1,
-        "missedIngredients": [
-            {
-                "id": 93632,
-                "amount": 0.5,
-                "unit": "tablespoon",
-                "unitLong": "tablespoons",
-                "unitShort": "Tbsp",
-                "aisle": "Ethnic Foods",
-                "name": "ghee",
-                "original": "Ghee (Clarified butter) - ½ tablespoon",
-                "originalString": "Ghee (Clarified butter) - ½ tablespoon",
-                "originalName": "Ghee (Clarified butter)",
-                "metaInformation": [
-                    "(Clarified butter)"
-                ],
-                "meta": [
-                    "(Clarified butter)"
-                ],
-                "image": "https://spoonacular.com/cdn/ingredients_100x100/ghee.jpg"
-            }
-        ],
-        "usedIngredients": [
-            {
-                "id": 1077,
-                "amount": 1.5,
-                "unit": "cups",
-                "unitLong": "cups",
-                "unitShort": "cup",
-                "aisle": "Milk, Eggs, Other Dairy",
-                "name": "full-fat milk",
-                "original": "Full fat milk powder - 1½ cups",
-                "originalString": "Full fat milk powder - 1½ cups",
-                "originalName": "Full fat milk powder",
-                "metaInformation": [],
-                "meta": [],
-                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
-            },
-            {
-                "id": 1077,
-                "amount": 0.25,
-                "unit": "cup",
-                "unitLong": "cups",
-                "unitShort": "cup",
-                "aisle": "Milk, Eggs, Other Dairy",
-                "name": "milk",
-                "original": "Milk - ¼ cup",
-                "originalString": "Milk - ¼ cup",
-                "originalName": "Milk",
-                "metaInformation": [],
-                "meta": [],
-                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
-            }
-        ],
-        "unusedIngredients": [],
-        "likes": 80
-    }
+      this.queryInput = React.createRef()
       this.updateFridge = this.updateFridge.bind(this)
       this.addToFridge = this.addToFridge.bind(this)
       this.removeFromFridge = this.removeFromFridge.bind(this)
       this.getRecipes = this.getRecipes.bind(this)
       this.getRecipePuppy = this.getRecipePuppy.bind(this)
+      this.searchQuery = this.searchQuery.bind(this)
+      this.editQuery = this.editQuery.bind(this)
 
   };
     
@@ -279,7 +156,7 @@ class FridgePage extends Component {
     const {token} = this.context
     const userData = {
       token,
-      query:"",
+      query:this.state.query,
       page:p
     };
     const requestOptions = {
@@ -316,6 +193,20 @@ class FridgePage extends Component {
     this.getRecipes(p)
   }
 
+  searchQuery(e){
+    e.preventDefault()
+    console.log(this.state.query)
+    this.getRecipePuppy()
+    this.queryInput.current.blur()
+    // console.log(queryInput)
+  }
+
+  editQuery(e){
+    this.setState({
+      query:e.target.value
+    })
+  }
+
   render() {
     // const {loggedIn} = this.context
 
@@ -341,15 +232,19 @@ class FridgePage extends Component {
             {
                this.state.fridge?this.state.fridge.map(item => <Ingredient key={item} name={item} remove={this.removeFromFridge}/>):<p>Load</p>
             }
-            {this.state.fridge?this.state.fridge.toString():<p>Loading</p>}
+            {/* {this.state.fridge?this.state.fridge.toString():<p>Loading</p>} */}
           </div>
           <div className="col-md-8 overflow-auto recipeSection" style={{}}>
             <h1>
                 Your Recipes
             </h1>
-
+             <form className="AutoCompleteText" noValidate onSubmit={this.searchQuery} style={{marginBottom:20}}>
+                <input ref={this.queryInput} value={this.state.query} onChange={this.editQuery} type="text" placeholder="Ex. Indian, Sushi, Jamaican, Burger"/> 
+                <a href="" className="material-icons addButton" onClick={this.searchQuery}>send</a>
+                 
+            </form>
             <div className="card-columns recipeColumn" style={{}}>
-            {this.state.recipes&&this.state.recipes.length>0? this.state.recipes.map(recipe => <RecipeCard recipe={recipe}/>):<p>Loading</p>}
+            {this.state.recipes&&this.state.recipes.length>0? this.state.recipes.map((recipe,i) => <RecipeCard key={i} recipe={recipe}/>):<p>Loading</p>}
 
             
             </div>

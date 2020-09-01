@@ -59,8 +59,8 @@ function RecipeCard(props) {
         </div>:
         <div className="card" style={{display:"inline-block",height:"300px",width:"100%"}}>
             <div className="d-flex align-center justify-content-center" style={{paddingTop:"130px"}}>
-           <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
+           <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
             </div>
             </div>
         </div>

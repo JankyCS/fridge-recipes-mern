@@ -130,7 +130,7 @@ class Autocomplete extends Component {
     return (
     //<Router>
       <div >
-        <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} style={{float:"left"}}>
+        <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} style={{float:"left",marginBottom:20}}>
             <input ref={this.searchInput} value={this.state.value} onChange={this.onChange}type="text" onBlur={this.hideSuggestions}/> {/*onBlur={this.hideSuggestions}*/} 
             {/* <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>

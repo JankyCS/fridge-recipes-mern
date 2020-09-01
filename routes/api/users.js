@@ -329,9 +329,11 @@ router.post("/edit-fridge", (req, res) => {
           else{
 
 
-            const url = "http://www.recipepuppy.com/api/?i="+user.fridge.toString()+
+            let url = "http://www.recipepuppy.com/api/?i="+user.fridge.toString()+
                         "&p="+page
-                        
+            if(query!=""){
+              url=url+"&q="+query
+            }            
                         
             console.log("The url is  "+url)
             // console.log("As a string:"+user.fridge.toString())
