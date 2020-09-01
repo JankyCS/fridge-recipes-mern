@@ -258,11 +258,16 @@ router.post("/edit-fridge", (req, res) => {
             .json({ error: "User not found" });
           }
           else{
-            const url = "https://api.spoonacular.com/recipes/findByIngredients?"+
+
+
+            const url = "https://api.spoonacular.com/recipes/complexSearch?"+
                         "apiKey="+process.env.SPOONACULAR_KEY+
-                        "&ingredients="+user.fridge.toString()+
-                        "&number=1"+
-                        "&ignorePantry="+pantry
+                        "&includeIngredients="+user.fridge.toString()+
+                        "&number=2"+
+                        "&ignorePantry="+pantry+
+                        "&instructionsRequired=true"+
+                        "&fillIngredients=true"
+                        
             console.log("The url is  "+url)
             // console.log("As a string:"+user.fridge.toString())
             fetch(url)
@@ -281,6 +286,9 @@ router.post("/edit-fridge", (req, res) => {
                 res.json(data)
             })
             .catch((error) => {
+              res
+              .status(400)
+              .json({ error });
               console.error('Error:', error);
             });
             
@@ -291,6 +299,74 @@ router.post("/edit-fridge", (req, res) => {
       }
     })
   });
+
+  router.post("/recipe-puppy", (req, res) => {
+    const {token,query} = req.body;
+    // const pantry = assumePantryItems==1? true : false
+
+    jwt.verify(token,process.env.secretOrKey, (err,decoded) =>{
+      if(err){
+        console.log(err)
+        return res
+          .status(400)
+          .json({ error: "Invallid/Expired Token"});
+      }
+      else{
+        console.log(decoded.name)
+        var user_id = decoded.id; 
+        console.log(user_id)
+        User.findById(user_id, function(err, user) {
+          if(err){
+            res
+            .status(400)
+            .json({ error: err });
+          }
+          if(!user){
+            res
+            .status(400)
+            .json({ error: "User not found" });
+          }
+          else{
+
+
+            const url = "http://www.recipepuppy.com/api/?i="+user.fridge.toString()+
+                        "&p="+1
+                        
+                        
+            console.log("The url is  "+url)
+            // console.log("As a string:"+user.fridge.toString())
+            fetch(url)
+            .then(response => {
+            const r = response.json()
+                if(response.ok){
+                    //console.log("Good")
+                    //this.props.history.push("/login");
+                }
+                return r
+            })
+            .then(data => {
+                if(true){
+                    // console.log("Recipes is "+JSON.stringify(data))
+                }
+                res.json(data)
+            })
+            .catch((error) => {
+              res
+              .status(400)
+              .json({ error});
+              console.error('Error:', error);
+            });
+            
+            
+          }
+         
+        });
+      }
+    })
+  });
+  
+
+
 
 
 

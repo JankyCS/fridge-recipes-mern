@@ -107,6 +107,44 @@ td{
   height:0
 }
 
+
+@media screen and (min-width: 768px){
+  .recipeSection{
+    height:92vh !important
+  }
+}
+
+@media (min-width: 350px) {
+  .recipeColumn {
+      column-count: 2 !important;
+  }
+}
+
+@media (min-width: 600px) {
+  .recipeColumn {
+      column-count: 3 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .recipeColumn {
+      column-count: 2 !important;
+  }
+}
+
+@media (min-width: 905px) {
+  .recipeColumn {
+      column-count: 3 !important;
+  }
+}
+
+/* @media (min-width: 1200px) {
+  .recipeColumn {
+      column-count: 5 !important;
+  }
+} */
+
+
 /* .App {
   text-align: center;
 }

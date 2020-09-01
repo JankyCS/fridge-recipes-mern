@@ -119,7 +119,7 @@ class Autocomplete extends Component {
                 suggestions: []
             }
         )
-        }, 100);
+        }, 300);
         
     }
 

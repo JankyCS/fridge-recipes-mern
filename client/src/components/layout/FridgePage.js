@@ -85,10 +85,75 @@ class FridgePage extends Component {
         "unusedIngredients": [],
         "likes": 1564
     }
+
+    this.testRecipe2 = {
+        "id": 600531,
+        "title": "Instant khoya – Quick and easy mawa",
+        "image": "https://spoonacular.com/recipeImages/600531-312x231.jpg",
+        "imageType": "jpg",
+        "usedIngredientCount": 2,
+        "missedIngredientCount": 1,
+        "missedIngredients": [
+            {
+                "id": 93632,
+                "amount": 0.5,
+                "unit": "tablespoon",
+                "unitLong": "tablespoons",
+                "unitShort": "Tbsp",
+                "aisle": "Ethnic Foods",
+                "name": "ghee",
+                "original": "Ghee (Clarified butter) - ½ tablespoon",
+                "originalString": "Ghee (Clarified butter) - ½ tablespoon",
+                "originalName": "Ghee (Clarified butter)",
+                "metaInformation": [
+                    "(Clarified butter)"
+                ],
+                "meta": [
+                    "(Clarified butter)"
+                ],
+                "image": "https://spoonacular.com/cdn/ingredients_100x100/ghee.jpg"
+            }
+        ],
+        "usedIngredients": [
+            {
+                "id": 1077,
+                "amount": 1.5,
+                "unit": "cups",
+                "unitLong": "cups",
+                "unitShort": "cup",
+                "aisle": "Milk, Eggs, Other Dairy",
+                "name": "full-fat milk",
+                "original": "Full fat milk powder - 1½ cups",
+                "originalString": "Full fat milk powder - 1½ cups",
+                "originalName": "Full fat milk powder",
+                "metaInformation": [],
+                "meta": [],
+                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
+            },
+            {
+                "id": 1077,
+                "amount": 0.25,
+                "unit": "cup",
+                "unitLong": "cups",
+                "unitShort": "cup",
+                "aisle": "Milk, Eggs, Other Dairy",
+                "name": "milk",
+                "original": "Milk - ¼ cup",
+                "originalString": "Milk - ¼ cup",
+                "originalName": "Milk",
+                "metaInformation": [],
+                "meta": [],
+                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
+            }
+        ],
+        "unusedIngredients": [],
+        "likes": 80
+    }
       this.updateFridge = this.updateFridge.bind(this)
       this.addToFridge = this.addToFridge.bind(this)
       this.removeFromFridge = this.removeFromFridge.bind(this)
       this.getRecipes = this.getRecipes.bind(this)
+      this.getRecipePuppy = this.getRecipePuppy.bind(this)
 
   };
     
@@ -200,9 +265,9 @@ class FridgePage extends Component {
   }
 
   getRecipes(){
-    this.setState({
-      recipes:[]
-    })
+    // this.setState({
+    //   recipes:[]
+    // })
     // if(this.context.loggedIn){
     //   console.log("pog???")
 
@@ -240,6 +305,55 @@ class FridgePage extends Component {
     
   }
 
+  getRecipePuppy(){
+    let p = 1
+    let url = "http://www.recipepuppy.com/api/?i="+this.state.fridge.toString()+
+              "&p="+p
+    
+    // r = requests.get("https://api.qwant.com/api/search/images",
+    // params={
+    //     'count': 50,
+    //     'q': query,
+    //     't': 'images',
+    //     'safesearch': 1,
+    //     'locale': 'en_US',
+    //     'uiv': 4
+    // },
+    // headers={
+    //     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+    // }
+    // )
+      
+    const {token} = this.context
+      const userData = {
+          token,
+          query:""
+      };
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData)
+      }
+      fetch('/api/users/recipe-puppy', requestOptions)
+      .then(response => {
+      const r = response.json()
+          if(response.ok){
+              //console.log("Good")
+              //this.props.history.push("/login");
+          }
+          return r
+      })
+      .then(data => {
+          if(true){
+              console.log("Recipes is "+JSON.stringify(data))
+              this.setState({recipes:data.results})
+        }
+      })
+      .catch(err=>{
+          console.log("Error is: "+err)
+      })
+  }
+
   render() {
     // const {loggedIn} = this.context
 
@@ -256,7 +370,7 @@ class FridgePage extends Component {
       <div className="container-fluid">
         <div  className="row">
           <div style={{minHeight: 320}} className="col-md-4 overflow-auto">
-            <h1 onClick={()=>this.getRecipes()}>
+            <h1 onClick={()=>this.getRecipePuppy()}>
                 Fridge
                 
             </h1>
@@ -267,12 +381,15 @@ class FridgePage extends Component {
             }
             {this.state.fridge?this.state.fridge.toString():<p>Loading</p>}
           </div>
-          <div className="col-md-8 overflow-auto">
+          <div className="col-md-8 overflow-auto recipeSection" style={{}}>
             <h1>
                 Recipes Section
             </h1>
-            <RecipeCard recipe={this.testRecipe}/>
-            {this.state.recipes?JSON.stringify(this.state.recipes[0]):<p>Loading</p>}
+            <div className="card-columns recipeColumn" style={{}}>
+            {this.state.recipes&&this.state.recipes.length>0? this.state.recipes.map(recipe => <RecipeCard recipe={recipe}/>):<p>Loading</p>}
+
+            
+            </div>
           </div>
           
         </div>
