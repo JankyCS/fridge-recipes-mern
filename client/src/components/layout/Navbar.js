@@ -26,7 +26,7 @@ class Navbar extends Component {
             <LoginContext.Consumer>
             {context => {
                 return (
-                    <button
+                    <Link to="/login"
                     onClick={context.toggleLogout}
                     style={{
                     width: "140px",
@@ -36,7 +36,7 @@ class Navbar extends Component {
                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 >
                     Logout
-                </button>
+                </Link>
                 )
             }}
             

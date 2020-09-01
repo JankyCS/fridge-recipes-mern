@@ -26,7 +26,7 @@ router.post("/register", (req, res) => {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            fridge: ["rice","water"]
+            fridge: []
         });
         // Hash password before saving in database
         bcrypt.genSalt(10, (err, salt) => {
@@ -206,6 +206,39 @@ router.post("/edit-fridge", (req, res) => {
         //   id: decoded.id,
         //   name: decoded.name
         // };
+        // console.log(decoded.name)
+        var user_id = decoded.id; 
+        console.log(user_id)
+        User.findById(user_id, function(err, user) {
+          if(err){
+            res
+            .status(400)
+            .json({ error: err });
+          }
+          if(!user){
+            console.log("no user")
+            res
+            .status(400)
+            .json({ error: "no user" });
+          }
+          res.json({
+            fridge: user.fridge
+          })
+        });
+      }
+    })
+  });
+
+  router.post("/get-recipes", (req, res) => {
+    const {token} = req.body;
+    jwt.verify(token,process.env.secretOrKey, (err,decoded) =>{
+      if(err){
+        console.log(err)
+        return res
+          .status(400)
+          .json({ error: "Invallid/Expired Token"});
+      }
+      else{
         console.log(decoded.name)
         var user_id = decoded.id; 
         console.log(user_id)

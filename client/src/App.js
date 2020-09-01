@@ -13,6 +13,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import {LoginContext} from "./components/LoginContext";
 import jwt_decode from "jwt-decode";
+const dotenv = require('dotenv').config()
 
 const UserContext = React.createContext()
 
@@ -53,7 +54,13 @@ class App extends Component {
     };
     
     let t = localStorage.jwtToken;
+    if(t){
+    console.log("rn t is "+t)
 
+    }else
+    {
+      console.log("no token")
+    }
     const tokenData = {
       token: t
     };
@@ -64,19 +71,16 @@ class App extends Component {
         body: JSON.stringify(tokenData)
     }
 
-    console.log("T is"+t)
-
-    const decoded = jwt_decode(t)
-
-    const expDate = new Date(decoded.exp*1000)
-    const now = new Date()
-
-    console.log("decoded is"+(expDate-now))
 
     //if(decoded.exp*1000)
-    if(t!=null && expDate-now<259200000){
+    if(t!=null){
       console.log("hereee")
-      fetch('/api/users/refresh', requestOptions)
+      const decoded = jwt_decode(t)
+
+      const expDate = new Date(decoded.exp*1000)
+      const now = new Date()
+      if(expDate-now<259200000){
+        fetch('/api/users/refresh', requestOptions)
         .then(response => {
           const r = response.json()
             if(response.ok){
@@ -115,6 +119,8 @@ class App extends Component {
               }
           }
         })
+      }
+      
     }
     this.state = {
         loggedIn:localStorage.jwtToken ? true : false,
@@ -144,17 +150,17 @@ class App extends Component {
 
 
   render() {
-    console.log("Currently stored exp date is ")
-     var created = ""
-    var expires = ""
-    var t = ""
+    // console.log("Currently stored exp date is ")
+    //  var created = ""
+    // var expires = ""
+    // var t = ""
 
 
-    if(this.state.token){
-      created = new Date(jwt_decode(this.state.token).iat*1000)
-      expires = new Date(jwt_decode(this.state.token).exp*1000)
-      t = localStorage.jwtToken
-    }
+    // if(this.state.token){
+    //   created = new Date(jwt_decode(this.state.token).iat*1000)
+    //   expires = new Date(jwt_decode(this.state.token).exp*1000)
+    //   t = localStorage.jwtToken
+    // }
 
    
     return (

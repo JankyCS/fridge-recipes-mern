@@ -8,11 +8,13 @@ import {
 import {LoginContext} from "../LoginContext";
 import Autocomplete from "../Autocomplete"
 import Ingredient from "./Ingredient"
+const dotenv = require('dotenv').config()
+
 class FridgePage extends Component {
 
     constructor(props){
       super(props);
-      console.log("the context is"+this.context)
+      // console.log("the context is"+this.context)
       //const {token} = this.context;
       // this.showFridge = this.showFridge.bind(this)
       this.state = {
@@ -21,10 +23,17 @@ class FridgePage extends Component {
       this.updateFridge = this.updateFridge.bind(this)
       this.addToFridge = this.addToFridge.bind(this)
       this.removeFromFridge = this.removeFromFridge.bind(this)
+      this.getRecipes = this.getRecipes.bind(this)
 
   };
     
     componentDidMount(){
+      const {loggedIn} = this.context
+      if(!loggedIn){
+          console.log("redirecting here1")
+          this.props.history.push("/");
+      }
+      else{
         const {token} = this.context
         const userData = {
             token
@@ -44,11 +53,17 @@ class FridgePage extends Component {
             return r
         })
         .then(data => {
-            if(true){
+            if(!data.error){
                 console.log("Data is "+JSON.stringify(data))
-                this.setState({fridge:data.fridge.sort()})
+                this.setState({fridge:data.fridge})
+            }
+            else{
+              this.context.toggleLogout()
+              this.props.history.push("/login");
             }
          })
+      }
+        
     };
 
   updateFridge(){
@@ -108,36 +123,46 @@ class FridgePage extends Component {
   }
 
   getRecipes(){
-    const url = "https://api.spoonacular.com/recipes/findByIngredients?"+
-                "apiKey="+process.env.REACT_APP_SPOONACULAR+
-                "&ingredients="+"rice,dates"+
-                "&number=10"
+    if(this.context.loggedIn){
+      console.log("pog???")
+      // console.log("Will it reach here?api key is "+process.env.REACT_APP_SPOONACULAR)
+    }
+    else{
+      console.log("nope not loggedIn")
+    }
+    // const url = "https://api.spoonacular.com/recipes/findByIngredients?"+
+    //             "apiKey="+process.env.REACT_APP_SPOONACULAR+
+    //             "&ingredients="+"rice,dates"+
+    //             "&number=10"
 
-    fetch(url)
-    .then(response => {
-    const r = response.json()
-        if(response.ok){
-            //console.log("Good")
-            //this.props.history.push("/login");
-        }
-        return r
-    })
-    .then(data => {
-        if(true){
-            console.log("Recipes is "+JSON.stringify(data))
-        }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    // fetch(url)
+    // .then(response => {
+    // const r = response.json()
+    //     if(response.ok){
+    //         //console.log("Good")
+    //         //this.props.history.push("/login");
+    //     }
+    //     return r
+    // })
+    // .then(data => {
+    //     if(true){
+    //         console.log("Recipes is "+JSON.stringify(data))
+    //     }
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // });
   }
 
   render() {
-    const {loggedIn} = this.context
+    // const {loggedIn} = this.context
 
-    if(!loggedIn){
-        this.props.history.push("/");
-    }
+    // if(!loggedIn){
+    //   console.log("redirecting here2")
+    //     this.props.history.push("/");
+    // }
+
+    this.getRecipes()
 
 
     return (
@@ -145,7 +170,7 @@ class FridgePage extends Component {
       <div className="container-fluid">
         <div  className="row">
           <div style={{minHeight: 320}} className="col-md-4 overflow-auto">
-            <h1 onClick={()=>this.updateFridge()}>
+            <h1 onClick={()=>this.getRecipes()}>
                 Fridge
                 
             </h1>
