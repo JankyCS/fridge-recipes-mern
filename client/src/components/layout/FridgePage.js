@@ -20,7 +20,8 @@ class FridgePage extends Component {
       // this.showFridge = this.showFridge.bind(this)
       this.state = {
           fridge:null,
-          query:""
+          query:"",
+          recipes:null
       }
 
       this.queryInput = React.createRef()
@@ -150,7 +151,8 @@ class FridgePage extends Component {
   }
 
   getRecipes(p){
-    if(p>100){
+    if(p>30){
+      this.setState({recipes:[]})
       return
     }
     const {token} = this.context
@@ -174,7 +176,7 @@ class FridgePage extends Component {
         return r
     })
     .then(data => {
-      if(data.error){
+      if(data.error || data.results.length==0){
         this.getRecipes(p+1)
       }
       else{
@@ -196,6 +198,7 @@ class FridgePage extends Component {
   searchQuery(e){
     e.preventDefault()
     console.log(this.state.query)
+    this.setState({recipes:null})
     this.getRecipePuppy()
     this.queryInput.current.blur()
     // console.log(queryInput)
@@ -230,7 +233,7 @@ class FridgePage extends Component {
             <Autocomplete add={this.addToFridge}/>
 
             {
-               this.state.fridge?this.state.fridge.map(item => <Ingredient key={item} name={item} remove={this.removeFromFridge}/>):<p>Load</p>
+               this.state.fridge?this.state.fridge.map(item => <Ingredient key={item} name={item} remove={this.removeFromFridge}/>):<p>Loading...</p>
             }
             {/* {this.state.fridge?this.state.fridge.toString():<p>Loading</p>} */}
           </div>
@@ -239,15 +242,16 @@ class FridgePage extends Component {
                 Your Recipes
             </h1>
              <form className="AutoCompleteText" noValidate onSubmit={this.searchQuery} style={{marginBottom:20}}>
-                <input ref={this.queryInput} value={this.state.query} onChange={this.editQuery} type="text" placeholder="Ex. Indian, Sushi, Jamaican, Burger"/> 
+                <input ref={this.queryInput} value={this.state.query} onChange={this.editQuery} type="text" placeholder="Search a cuisine (Indian, Chinese, Jamaican), a food (Burger, fried rice, pizza), or anything else you want!"/> 
                 <a href="" className="material-icons addButton" onClick={this.searchQuery}>send</a>
                  
             </form>
             <div className="card-columns recipeColumn" style={{}}>
-            {this.state.recipes&&this.state.recipes.length>0? this.state.recipes.map((recipe,i) => <RecipeCard key={i} recipe={recipe}/>):<p>Loading</p>}
-
+            {this.state.recipes? this.state.recipes.map((recipe,i) => <RecipeCard key={i} recipe={recipe}/>):<p>Loading...</p>}
             
             </div>
+            {this.state.recipes && this.state.recipes.length==0 ? <p>No Recipes Found. Try a different search query, or editing your fridge!</p>:null}
+
           </div>
           
         </div>
