@@ -190,7 +190,7 @@ class FridgePage extends Component {
                     this.setState({fridge:[]})
                 }
                 else{
-                  this.setState({fridge:data.fridge},this.getRecipes())
+                  this.setState({fridge:data.fridge})
 
                 }
             }
@@ -198,6 +198,9 @@ class FridgePage extends Component {
               this.context.toggleLogout()
               this.props.history.push("/login");
             }
+         })
+         .then(d=>{
+           this.getRecipePuppy()
          })
       }
         
@@ -231,8 +234,13 @@ class FridgePage extends Component {
         
         }
       })
+    .then(
+      d=>{
+        this.getRecipePuppy()
+      }
+    )
 
-      this.getRecipes()
+    
   }
 
   addToFridge(food){
@@ -264,94 +272,48 @@ class FridgePage extends Component {
     },()=>{this.updateFridge()})
   }
 
-  getRecipes(){
-    // this.setState({
-    //   recipes:[]
-    // })
-    // if(this.context.loggedIn){
-    //   console.log("pog???")
-
-    //   const {token} = this.context
-    //   const userData = {
-    //       token,
-    //       assumePantryItems:1
-    //   };
-    //   const requestOptions = {
-    //       method: 'POST',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify(userData)
-    //   }
-    //   fetch('/api/users/get-recipes', requestOptions)
-    //   .then(response => {
-    //   const r = response.json()
-    //       if(response.ok){
-    //           //console.log("Good")
-    //           //this.props.history.push("/login");
-    //       }
-    //       return r
-    //   })
-    //   .then(data => {
-    //       if(true){
-    //           console.log("Recipes is "+JSON.stringify(data))
-    //           this.setState({recipes:data})
-          
-    //       }
-    //     })
-    //   // console.log("Will it reach here?api key is "+process.env.REACT_APP_SPOONACULAR)
-    // }
-    // else{
-    //   console.log("nope not loggedIn")
-    // }
-    
+  getRecipes(p){
+    if(p>100){
+      return
+    }
+    const {token} = this.context
+    const userData = {
+      token,
+      query:"",
+      page:p
+    };
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+    }
+    fetch('/api/users/recipe-puppy', requestOptions)
+    .then(response => {
+    const r = response.json()
+        if(response.ok){
+            //console.log("Good")
+            //this.props.history.push("/login");
+        }
+        return r
+    })
+    .then(data => {
+      if(data.error){
+        this.getRecipes(p+1)
+      }
+      else{
+        console.log("Recipes is "+JSON.stringify(data))
+        this.setState({recipes:data.results})
+      }
+    })
+    .catch(err=>{
+        console.log("Error is: "+err)
+    })
+      
   }
 
   getRecipePuppy(){
-    let p = 1
-    let url = "http://www.recipepuppy.com/api/?i="+this.state.fridge.toString()+
-              "&p="+p
-    
-    // r = requests.get("https://api.qwant.com/api/search/images",
-    // params={
-    //     'count': 50,
-    //     'q': query,
-    //     't': 'images',
-    //     'safesearch': 1,
-    //     'locale': 'en_US',
-    //     'uiv': 4
-    // },
-    // headers={
-    //     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
-    // }
-    // )
-      
-    const {token} = this.context
-      const userData = {
-          token,
-          query:""
-      };
-      const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(userData)
-      }
-      fetch('/api/users/recipe-puppy', requestOptions)
-      .then(response => {
-      const r = response.json()
-          if(response.ok){
-              //console.log("Good")
-              //this.props.history.push("/login");
-          }
-          return r
-      })
-      .then(data => {
-          if(true){
-              console.log("Recipes is "+JSON.stringify(data))
-              this.setState({recipes:data.results})
-        }
-      })
-      .catch(err=>{
-          console.log("Error is: "+err)
-      })
+    let p = Math.floor(Math.random() * 20)+1;  
+    this.getRecipes(p)
   }
 
   render() {
@@ -369,7 +331,7 @@ class FridgePage extends Component {
     //<Router>
       <div className="container-fluid">
         <div  className="row">
-          <div style={{minHeight: 320}} className="col-md-4 overflow-auto">
+          <div style={{minHeight: 320}} className="col-md-4 overflow-auto recipeSection">
             <h1 onClick={()=>this.getRecipePuppy()}>
                 Fridge
                 
@@ -383,8 +345,9 @@ class FridgePage extends Component {
           </div>
           <div className="col-md-8 overflow-auto recipeSection" style={{}}>
             <h1>
-                Recipes Section
+                Your Recipes
             </h1>
+
             <div className="card-columns recipeColumn" style={{}}>
             {this.state.recipes&&this.state.recipes.length>0? this.state.recipes.map(recipe => <RecipeCard recipe={recipe}/>):<p>Loading</p>}
 

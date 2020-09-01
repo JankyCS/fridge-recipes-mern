@@ -301,7 +301,7 @@ router.post("/edit-fridge", (req, res) => {
   });
 
   router.post("/recipe-puppy", (req, res) => {
-    const {token,query} = req.body;
+    const {token,query,page} = req.body;
     // const pantry = assumePantryItems==1? true : false
 
     jwt.verify(token,process.env.secretOrKey, (err,decoded) =>{
@@ -330,7 +330,7 @@ router.post("/edit-fridge", (req, res) => {
 
 
             const url = "http://www.recipepuppy.com/api/?i="+user.fridge.toString()+
-                        "&p="+1
+                        "&p="+page
                         
                         
             console.log("The url is  "+url)
