@@ -8,6 +8,7 @@ import {
 import {LoginContext} from "../LoginContext";
 import Autocomplete from "../Autocomplete"
 import Ingredient from "./Ingredient"
+import RecipeCard from "./RecipeCard"
 const dotenv = require('dotenv').config()
 
 class FridgePage extends Component {
@@ -20,6 +21,70 @@ class FridgePage extends Component {
       this.state = {
           fridge:null
       }
+
+      this.testRecipe = {
+        "id": 666439,
+        "title": "Homemade Ricotta",
+        "image": "https://spoonacular.com/recipeImages/666439-312x231.jpg",
+        "imageType": "jpg",
+        "usedIngredientCount": 2,
+        "missedIngredientCount": 1,
+        "missedIngredients": [
+            {
+                "id": 1049,
+                "amount": 3,
+                "unit": "cups",
+                "unitLong": "cups",
+                "unitShort": "cup",
+                "aisle": "Milk, Eggs, Other Dairy",
+                "name": "half & half",
+                "original": "3 cups half & half",
+                "originalString": "3 cups half & half",
+                "originalName": "half & half",
+                "metaInformation": [],
+                "meta": [],
+                "image": "https://spoonacular.com/cdn/ingredients_100x100/fluid-cream.jpg"
+            }
+        ],
+        "usedIngredients": [
+            {
+                "id": 1077,
+                "amount": 5,
+                "unit": "cups",
+                "unitLong": "cups",
+                "unitShort": "cup",
+                "aisle": "Milk, Eggs, Other Dairy",
+                "name": "full-fat milk",
+                "original": "5 cups full-fat buttermilk",
+                "originalString": "5 cups full-fat buttermilk",
+                "originalName": "full-fat buttermilk",
+                "metaInformation": [],
+                "meta": [],
+                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
+            },
+            {
+                "id": 1077,
+                "amount": 5,
+                "unit": "qt",
+                "unitLong": "quarts",
+                "unitShort": "qt",
+                "aisle": "Milk, Eggs, Other Dairy",
+                "name": "whole milk",
+                "original": "5 qt. whole milk",
+                "originalString": "5 qt. whole milk",
+                "originalName": "whole milk",
+                "metaInformation": [
+                    "whole"
+                ],
+                "meta": [
+                    "whole"
+                ],
+                "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
+            }
+        ],
+        "unusedIngredients": [],
+        "likes": 1564
+    }
       this.updateFridge = this.updateFridge.bind(this)
       this.addToFridge = this.addToFridge.bind(this)
       this.removeFromFridge = this.removeFromFridge.bind(this)
@@ -135,40 +200,43 @@ class FridgePage extends Component {
   }
 
   getRecipes(){
-    if(this.context.loggedIn){
-      console.log("pog???")
+    this.setState({
+      recipes:[]
+    })
+    // if(this.context.loggedIn){
+    //   console.log("pog???")
 
-      const {token} = this.context
-      const userData = {
-          token,
-          assumePantryItems:1
-      };
-      const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(userData)
-      }
-      fetch('/api/users/get-recipes', requestOptions)
-      .then(response => {
-      const r = response.json()
-          if(response.ok){
-              //console.log("Good")
-              //this.props.history.push("/login");
-          }
-          return r
-      })
-      .then(data => {
-          if(true){
-              console.log("Recipes is "+JSON.stringify(data))
-              this.setState({recipes:data})
+    //   const {token} = this.context
+    //   const userData = {
+    //       token,
+    //       assumePantryItems:1
+    //   };
+    //   const requestOptions = {
+    //       method: 'POST',
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify(userData)
+    //   }
+    //   fetch('/api/users/get-recipes', requestOptions)
+    //   .then(response => {
+    //   const r = response.json()
+    //       if(response.ok){
+    //           //console.log("Good")
+    //           //this.props.history.push("/login");
+    //       }
+    //       return r
+    //   })
+    //   .then(data => {
+    //       if(true){
+    //           console.log("Recipes is "+JSON.stringify(data))
+    //           this.setState({recipes:data})
           
-          }
-        })
-      // console.log("Will it reach here?api key is "+process.env.REACT_APP_SPOONACULAR)
-    }
-    else{
-      console.log("nope not loggedIn")
-    }
+    //       }
+    //     })
+    //   // console.log("Will it reach here?api key is "+process.env.REACT_APP_SPOONACULAR)
+    // }
+    // else{
+    //   console.log("nope not loggedIn")
+    // }
     
   }
 
@@ -203,6 +271,7 @@ class FridgePage extends Component {
             <h1>
                 Recipes Section
             </h1>
+            <RecipeCard recipe={this.testRecipe}/>
             {this.state.recipes?JSON.stringify(this.state.recipes[0]):<p>Loading</p>}
           </div>
           
