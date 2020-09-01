@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
+// const keys = require("../../config/keys");
 // Load input validation
 const validateSignup = require("../../validation/register");
 const validateLogin = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
+require('dotenv').config();
 
 router.post("/register", (req, res) => {
     // Form validation
@@ -69,7 +70,7 @@ router.post("/login", (req, res) => {
         // Sign token
         jwt.sign(
             payload,
-            keys.secretOrKey,
+            process.env.secretOrKey,
             {
                 expiresIn: 604800 // 1 year in seconds
             },
@@ -96,7 +97,7 @@ router.post("/refresh", (req, res) => {
 
     const token = req.body.token;
 
-    jwt.verify(token,keys.secretOrKey, (err,decoded) =>{
+    jwt.verify(token,process.env.secretOrKey, (err,decoded) =>{
       if(err){
         console.log(err)
         return res
@@ -111,7 +112,7 @@ router.post("/refresh", (req, res) => {
 
         jwt.sign(
           payload,
-          keys.secretOrKey,
+          process.env.secretOrKey,
           {
               expiresIn: 604800 // 1 year in seconds
           },
@@ -156,7 +157,7 @@ router.post("/edit-fridge", (req, res) => {
     
 
 
-    jwt.verify(token,keys.secretOrKey, (err,decoded) =>{
+    jwt.verify(token,process.env.secretOrKey, (err,decoded) =>{
       if(err){
         console.log(err)
         return res
@@ -192,9 +193,8 @@ router.post("/edit-fridge", (req, res) => {
   });
 
   router.post("/get-fridge", (req, res) => {
-
     const {token} = req.body;
-    jwt.verify(token,keys.secretOrKey, (err,decoded) =>{
+    jwt.verify(token,process.env.secretOrKey, (err,decoded) =>{
       if(err){
         console.log(err)
         return res

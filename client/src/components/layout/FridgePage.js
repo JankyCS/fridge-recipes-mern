@@ -107,6 +107,31 @@ class FridgePage extends Component {
     },()=>{this.updateFridge()})
   }
 
+  getRecipes(){
+    const url = "https://api.spoonacular.com/recipes/findByIngredients?"+
+                "apiKey="+process.env.REACT_APP_SPOONACULAR+
+                "&ingredients="+"rice,dates"+
+                "&number=10"
+
+    fetch(url)
+    .then(response => {
+    const r = response.json()
+        if(response.ok){
+            //console.log("Good")
+            //this.props.history.push("/login");
+        }
+        return r
+    })
+    .then(data => {
+        if(true){
+            console.log("Recipes is "+JSON.stringify(data))
+        }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
   render() {
     const {loggedIn} = this.context
 

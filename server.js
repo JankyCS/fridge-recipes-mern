@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport")
 
 const users = require("./routes/api/users")
-
+require('dotenv').config();
 const app = express();
 // Bodyparser middleware
 app.use(
@@ -14,7 +14,7 @@ app.use(
 );
 app.use(bodyParser.json());
 // DB Config
-const db = require("./config/keys").mongoURI;
+const db = process.env.DB_URL
 // Connect to MongoDB
 mongoose
   .connect(
