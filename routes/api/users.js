@@ -8,6 +8,8 @@ const validateSignup = require("../../validation/register");
 const validateLogin = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
+const fetch = require("node-fetch");
+
 require('dotenv').config();
 
 router.post("/register", (req, res) => {
@@ -248,9 +250,39 @@ router.post("/edit-fridge", (req, res) => {
             .status(400)
             .json({ error: err });
           }
-          res.json({
-            fridge: user.fridge
-          })
+          if(!user){
+            res
+            .status(400)
+            .json({ error: "User not found" });
+          }
+          else{
+            const url = "https://api.spoonacular.com/recipes/findByIngredients?"+
+                        "apiKey="+process.env.SPOONACULAR_KEY+
+                        "&ingredients="+"rice,dates"+
+                        "&number=10"
+
+            fetch(url)
+            .then(response => {
+            const r = response.json()
+                if(response.ok){
+                    //console.log("Good")
+                    //this.props.history.push("/login");
+                }
+                return r
+            })
+            .then(data => {
+                if(true){
+                    console.log("Recipes is "+JSON.stringify(data))
+                }
+                res.json(data)
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+            
+            
+          }
+         
         });
       }
     })
