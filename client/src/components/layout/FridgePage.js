@@ -101,10 +101,13 @@ class FridgePage extends Component {
         
         }
       })
+
+      this.getRecipes()
   }
 
   addToFridge(food){
     console.log(food)
+    if(!this.state.fridge.includes(food.toLowerCase())){
     this.setState((prev)=>{
       
       let f =[...prev.fridge,food.toLowerCase()]
@@ -113,6 +116,8 @@ class FridgePage extends Component {
         fridge: f
       }
     },()=>{this.updateFridge()})
+    }
+    
   }
 
   removeFromFridge(food){
@@ -194,7 +199,7 @@ class FridgePage extends Component {
             }
             {this.state.fridge?this.state.fridge.toString():<p>Loading</p>}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-8 overflow-auto">
             <h1>
                 Recipes Section
             </h1>

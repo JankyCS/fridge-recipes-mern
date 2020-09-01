@@ -263,7 +263,7 @@ router.post("/edit-fridge", (req, res) => {
                         "&ingredients="+user.fridge.toString()+
                         "&number=1"+
                         "&ignorePantry="+pantry
-            console.log("The url is "+url)
+            console.log("The url is  "+url)
             // console.log("As a string:"+user.fridge.toString())
             fetch(url)
             .then(response => {
