@@ -56,6 +56,9 @@ onSubmit(e) {
 
   };
 render() {
+  if(this.context.loggedIn){
+    this.props.history.push("/fridge");
+  }
     const { errors } = this.state;
     return (
       <div className="container">

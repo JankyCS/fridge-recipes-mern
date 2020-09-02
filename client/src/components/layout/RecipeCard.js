@@ -48,7 +48,7 @@ function RecipeCard(props) {
 
     return(
         image!=""?
-        <div className="card" style={{display:"inline-block",width:"100%"}}>
+        <div className="card" style={{display:"inline-block",width:"100%",zIndex:0}}>
             <img className="card-img-top" src={image} alt="Card image cap" onError={()=>{console.log("Image error get another");setImage("https://www.helpguide.org/wp-content/uploads/table-with-grains-vegetables-fruit-768.jpg");}}/>
             <div className="card-body">
                 <h5 className="card-title">{title}</h5>

@@ -61,6 +61,9 @@ class Register extends Component {
     };
 
 render() {
+  if(this.context.loggedIn){
+    this.props.history.push("/fridge");
+  }
     const { errors } = this.state;
     //console.log(JSON.stringify(errors))
     return (
@@ -148,4 +151,6 @@ render() {
     );
   }
 }
+
+Register.contextType = LoginContext
 export default Register;

@@ -240,9 +240,9 @@ class FridgePage extends Component {
     return (
     //<Router>
       <div className="container-fluid">
-        <div  className="row">
+        <div  className="row" >
           <div style={{minHeight: 320}} className="col-md-4 overflow-auto recipeSection">
-            <h1>
+            <h1 style={{marginTop:15}}>
                 Fridge
                 
             </h1>
@@ -254,7 +254,7 @@ class FridgePage extends Component {
             {/* {this.state.fridge?this.state.fridge.toString():<p>Loading</p>} */}
           </div>
           <div className="col-md-8 overflow-auto recipeSection" style={{}}>
-            <h1>
+            <h1 style={{marginTop:15}}>
                 Your Recipes
             </h1>
              <form className="AutoCompleteText" noValidate onSubmit={this.searchQuery} style={{marginBottom:20}}>
