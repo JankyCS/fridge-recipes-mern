@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const validateSignup = require("../../validation/register");
 const validateLogin = require("../../validation/login");
 // Load User model
-const User = require("../../models/User");
+const User = require("../../models/user");
 const fetch = require("node-fetch");
 
 require('dotenv').config();
