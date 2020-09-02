@@ -15,7 +15,7 @@ class Landing extends Component {
     }
     return (
     //<Router>
-      <div className="container-fluid landing" >
+      <div className="container-fluid poppin" >
         <div className="row align-items-center" style={{textAlign:"center",height:300,verticalAlign: "middle"}}>
             <div className="col-sm-5" style={{textAlign:"Left",padding:"10vh 5vw 0px 5vw"}}>
               <h1 style={{fontSize:50,fontWeight:700}}>Your Modern Day Fridge Management Assistant.</h1>
