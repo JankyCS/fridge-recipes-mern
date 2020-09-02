@@ -21,7 +21,8 @@ class FridgePage extends Component {
       this.state = {
           fridge:null,
           query:"",
-          recipes:null
+          recipes:null,
+          msg:"Loading..."
       }
 
       this.queryInput = React.createRef()
@@ -64,7 +65,7 @@ class FridgePage extends Component {
             if(!data.error){
                 console.log(data.fridge.length)
                 console.log("Data is p"+JSON.stringify(data))
-                if(data.fridge.length==1 && data.fridge[0].length==0){
+                if(data.fridge.length===1 && data.fridge[0].length===0){
                     this.setState({fridge:[]})
                 }
                 else{
@@ -152,7 +153,8 @@ class FridgePage extends Component {
 
   getRecipes(p){
     if(p>30){
-      this.setState({recipes:[]})
+      this.setState({recipes:[],msg:"No Recipes Found. Try a different search query, or editing your fridge!"})
+      
       return
     }
     const {token} = this.context
@@ -176,12 +178,24 @@ class FridgePage extends Component {
         return r
     })
     .then(data => {
-      if(data.error || data.results.length==0){
+      if(data.error || data.results.length===0){
         this.getRecipes(p+1)
       }
       else{
         console.log("Recipes is "+JSON.stringify(data))
-        this.setState({recipes:data.results})
+        this.setState(prev=>{
+          let f = prev.recipes ? [...prev.recipes] : []
+          f = f.concat(data.results)
+          console.log("this is "+JSON.stringify(f))
+          return {
+            recipes: f
+          }
+        },()=>{
+          if(this.state.recipes.length<15){
+            this.getRecipes(p+1)
+          }
+        })
+        
       }
     })
     .catch(err=>{
@@ -191,8 +205,10 @@ class FridgePage extends Component {
   }
 
   getRecipePuppy(){
-    let p = Math.floor(Math.random() * 20)+1;  
-    this.getRecipes(p)
+    
+    let p = Math.floor(Math.random() * 20)+1; 
+    this.setState({recipes:[],msg:"Loading..."},()=>{this.getRecipes(p)})
+    
   }
 
   searchQuery(e){
@@ -226,7 +242,7 @@ class FridgePage extends Component {
       <div className="container-fluid">
         <div  className="row">
           <div style={{minHeight: 320}} className="col-md-4 overflow-auto recipeSection">
-            <h1 onClick={()=>this.getRecipePuppy()}>
+            <h1>
                 Fridge
                 
             </h1>
@@ -246,11 +262,11 @@ class FridgePage extends Component {
                 <a href="" className="material-icons addButton" onClick={this.searchQuery}>send</a>
                  
             </form>
-            <div className="card-columns recipeColumn" style={{}}>
-            {this.state.recipes? this.state.recipes.map((recipe,i) => <RecipeCard key={i} recipe={recipe}/>):<p>Loading...</p>}
+           
+            {this.state.recipes && this.state.recipes.length>0? <div className="card-columns recipeColumn" style={{}}>{this.state.recipes.map((recipe,i) => <RecipeCard key={i} recipe={recipe}/>)}</div>:<p>{this.state.msg}</p>}
             
-            </div>
-            {this.state.recipes && this.state.recipes.length==0 ? <p>No Recipes Found. Try a different search query, or editing your fridge!</p>:null}
+            {/* <p>{this.state.msg?this.state.msg:null}</p> */}
+            {/* {this.state.recipes && this.state.recipes.length===0 ? <p>No Recipes Found. Try a different search query, or editing your fridge!</p>:null} */}
 
           </div>
           

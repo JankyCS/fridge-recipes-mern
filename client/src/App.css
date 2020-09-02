@@ -1,3 +1,8 @@
+body {
+  font-family: Nunito !important;
+}
+
+
 .AutoCompleteText {
   width:100%;
   /* border: 1px solid grey; */
@@ -114,13 +119,13 @@ td{
   }
 }
 
-@media (min-width: 350px) {
+@media (min-width: 500px) {
   .recipeColumn {
       column-count: 2 !important;
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 730px) {
   .recipeColumn {
       column-count: 3 !important;
   }
@@ -132,11 +137,18 @@ td{
   }
 }
 
-@media (min-width: 905px) {
+@media (min-width: 1000px){
   .recipeColumn {
       column-count: 3 !important;
   }
 }
+
+@media (min-width: 1700px){
+  .recipeColumn {
+      column-count: 4 !important;
+  }
+}
+
 
 /* @media (min-width: 1200px) {
   .recipeColumn {
