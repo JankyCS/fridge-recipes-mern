@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
@@ -15,17 +14,12 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import {LoginContext} from "./components/LoginContext";
 import jwt_decode from "jwt-decode";
-const dotenv = require('dotenv').config()
-
-const UserContext = React.createContext()
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.toggleLogin = (token) => {
       localStorage.setItem("jwtToken", token);
-      const decoded = jwt_decode(token);
-
       this.setState(state => ({
         loggedIn: true,
         token: token

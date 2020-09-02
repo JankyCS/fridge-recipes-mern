@@ -1,4 +1,4 @@
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {LoginContext} from "../LoginContext";
 
@@ -39,7 +39,7 @@ onSubmit(e) {
         })
         .then(data => {
           this.setState({ errors: data })
-          if(data.success==true){
+          if(data.success===true){
               toggleLogin(data.token)
                 this.props.history.push("/fridge");
           }

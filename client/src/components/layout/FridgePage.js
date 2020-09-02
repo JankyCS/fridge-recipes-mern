@@ -1,15 +1,8 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import {LoginContext} from "../LoginContext";
 import Autocomplete from "../Autocomplete"
 import Ingredient from "./Ingredient"
 import RecipeCard from "./RecipeCard"
-const dotenv = require('dotenv').config()
 
 class FridgePage extends Component {
 
@@ -208,7 +201,7 @@ class FridgePage extends Component {
             </h1>
              <form className="AutoCompleteText" noValidate onSubmit={this.searchQuery} style={{marginBottom:20}}>
                 <input ref={this.queryInput} value={this.state.query} onChange={this.editQuery} type="text" placeholder="Search a cuisine (Indian, Chinese, Jamaican), a food (Burger, fried rice, pizza), or anything else you want!"/> 
-                <a href="" className="material-icons addButton" onClick={this.searchQuery}>send</a>
+                <span className="material-icons addButton" onClick={this.searchQuery} style={{cursor: "pointer"}}>send</span>
                  
             </form>
             {this.state.recipes && this.state.recipes.length>0? <div className="card-columns recipeColumn" style={{}}>{this.state.recipes.map((recipe,i) => <RecipeCard key={i} recipe={recipe}/>)}</div>:<p>{this.state.msg}</p>}

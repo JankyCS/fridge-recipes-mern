@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ingredientJSON from "../newIngredients.json"
-import ReactDOM from "react-dom"
 
 class Autocomplete extends Component {
     constructor(props){
@@ -32,7 +31,7 @@ class Autocomplete extends Component {
                     const regex = new RegExp(`${value}`,'i')
                     for(let i=0 ;i<ingredients.length; i++)
                     {
-                        if (ingredients[i]['name'].indexOf(value.toLowerCase()) == 0) {
+                        if (ingredients[i]['name'].indexOf(value.toLowerCase()) === 0) {
                             first.push(ingredients[i]);
                         }
                         else if(regex.test(ingredients[i]['name'])){
@@ -109,7 +108,7 @@ class Autocomplete extends Component {
       <div >
         <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} style={{float:"left",marginBottom:20}}>
             <input ref={this.searchInput} value={this.state.value} onChange={this.onChange}type="text" onBlur={this.hideSuggestions}/> {/*onBlur={this.hideSuggestions}*/} 
-            <a href="" className="material-icons addButton" onClick={this.onSubmit}>add_circle_outline</a>
+            <span href="" className="material-icons addButton" onClick={this.onSubmit} style={{cursor:"pointer"}}>add_circle_outline</span>
             
             {this.showSuggestions()}    
         </form>
