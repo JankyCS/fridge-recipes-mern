@@ -1,8 +1,9 @@
 import React from "react";
 
+//Ingredient card with callback button to remove from user fridge
 function Ingredient(props) {
     return(
-        <div className="card" style={{display:"inline-block",marginTop: 10, marginRight:10, zIndex:0}} >
+        <div className="card" style={{display:"inline-block",marginTop: 10, marginRight:10, zIndex:0}}>
         <div className="card-body" style={{padding: 0}}>
             <table>
             <tbody>

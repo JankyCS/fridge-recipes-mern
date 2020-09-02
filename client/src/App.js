@@ -18,6 +18,8 @@ import jwt_decode from "jwt-decode";
 class App extends Component {
   constructor(props) {
     super(props);
+    
+    //Context methods to log in and out, saving/removing from localstorage
     this.toggleLogin = (token) => {
       localStorage.setItem("jwtToken", token);
       this.setState(state => ({
@@ -28,7 +30,6 @@ class App extends Component {
 
     this.toggleLogout = () => {
       localStorage.removeItem("jwtToken");
-
       this.setState(state => ({
         loggedIn: false,
         token: null
@@ -48,9 +49,10 @@ class App extends Component {
 
     if(t!=null){
       const decoded = jwt_decode(t)
-
       const expDate = new Date(decoded.exp*1000)
       const now = new Date()
+
+      //If token expires in less than 3 days, request a new token
       if(expDate-now<259200000){
         fetch('/api/users/refresh', requestOptions)
         .then(response => {
@@ -58,15 +60,15 @@ class App extends Component {
           return r
         })
         .then(data => {
-            if(data.success){
-              localStorage.setItem("jwtToken", data.token);
-               
-            }else{
-              localStorage.removeItem("jwtToken");
+          if(data.success){
+            localStorage.setItem("jwtToken", data.token);
               
-            }
-             t = localStorage.jwtToken;
-             return t
+          }
+          else{
+            localStorage.removeItem("jwtToken");
+          }
+          t = localStorage.jwtToken;
+          return t
         })
         .then((t)=>{
           if(this.state && this._ismounted){
@@ -77,22 +79,22 @@ class App extends Component {
           }
           else{
             this.state = {
-                loggedIn:localStorage.jwtToken ? true : false,
-                toggleLogin: this.toggleLogin,
-                toggleLogout: this.toggleLogout,
-                token: t
-              }
+              loggedIn:localStorage.jwtToken ? true : false,
+              toggleLogin: this.toggleLogin,
+              toggleLogout: this.toggleLogout,
+              token: t
+            }
           }
         })
       }
       
     }
     this.state = {
-        loggedIn:localStorage.jwtToken ? true : false,
-        toggleLogin: this.toggleLogin,
-        toggleLogout: this.toggleLogout,
-        token: t
-      }  
+      loggedIn:localStorage.jwtToken ? true : false,
+      toggleLogin: this.toggleLogin,
+      toggleLogout: this.toggleLogout,
+      token: t
+    }  
   }
 
   render() {
@@ -114,4 +116,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;

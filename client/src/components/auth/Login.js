@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {LoginContext} from "../LoginContext";
 
-
+// User Login Page
 class Login extends Component {
   constructor() {
     super();
@@ -16,22 +16,28 @@ class Login extends Component {
     this.onSubmit = this.onSubmit.bind(this)
 
   }
-onChange(e) {
+  
+  // Form Change Handler
+  onChange(e) {
     this.setState({ [e.target.id]: e.target.value });
   };
-onSubmit(e) {
+  
+  // Submit login info, try to log in
+  onSubmit(e) {
     const {toggleLogin} = this.context;
     e.preventDefault();
     const userData = {
       email: this.state.email,
       password: this.state.password
     };
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData)
     }
 
+    // Request token for corresponding user account from backend
     fetch('/api/users/login', requestOptions)
         .then(response => {
           const r = response.json()
@@ -46,10 +52,11 @@ onSubmit(e) {
         })
 
   };
-render() {
-  if(this.context.loggedIn){
-    this.props.history.push("/fridge");
-  }
+
+  render() {
+    if(this.context.loggedIn){
+      this.props.history.push("/fridge");
+    }
     const { errors } = this.state;
     return (
       <div className="container-fluid poppin"  style={{marginTop:"50px",maxWidth:"750px",width:"100%"}}>
@@ -88,16 +95,16 @@ render() {
                   style={{
                     width: "100px",
                     borderRadius: "3px",
-                    // letterSpacing: "1.5px",
-                    // marginTop: "1rem"
                   }}
                   type="submit"
-                  className="btn btn-primary waves-effect waves-light hoverable blue accent-3"
+                  className="btn btn-primary"
                 >
                   Log In
                 </button>
               
             </form>
+
+            {/* Errors */}
             <small className="form-text text-danger">
                   {errors.email}
                   {errors.emailnotfound}

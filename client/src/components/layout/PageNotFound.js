@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {LoginContext} from "../LoginContext";
 
-
+//Error 404 page
 class PageNotFound extends Component {
- 
-render() {
-    
+  render() {
     return (
       <div className="container-fluid poppin"  style={{marginTop:"50px",maxWidth:"750px",width:"100%"}}>
         <div className="row">

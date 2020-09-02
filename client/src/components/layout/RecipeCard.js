@@ -1,7 +1,7 @@
 import React, { useState, useEffect  } from "react";
 
+//Recipe Card
 function RecipeCard(props) {
-
     const {recipe} = props
     let {title,href,ingredients} = recipe
     const [image,setImage] = useState("")
@@ -9,6 +9,7 @@ function RecipeCard(props) {
     title = title.replace('&#233;','e')
     title = title.replace('&amp;','&')
 
+    //Upon getting recipe, make call to backend to search for picture based on recipe title
     useEffect(() => {
         setImage("")
         const userData = {
@@ -31,8 +32,6 @@ function RecipeCard(props) {
             console.log("Error is: "+err)
         })
     }, [recipe,title]);
-      
-    
 
     return(
         image!==""?

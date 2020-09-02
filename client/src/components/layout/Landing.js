@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import {LoginContext} from "../LoginContext";
 import mockup from "../../mockup.png"
 
+// Landing/homepage
 class Landing extends Component {
   render() {
+    //Redirect if logged in
     if(this.context.loggedIn){
       this.props.history.push("/fridge");
     }
@@ -42,7 +44,7 @@ class Landing extends Component {
               </Link>
             </div>
             <div className="col-sm-7 align-middle">
-              <img src={mockup} alt="mockup" height="" style={
+              <img src={mockup} alt="mockup" style={
                 {marginLeft: "auto",
                 marginRight: "auto",
                 padding:"5vh 5vw 5vh 0px",
