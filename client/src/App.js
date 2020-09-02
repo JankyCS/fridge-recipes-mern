@@ -19,23 +19,11 @@ const dotenv = require('dotenv').config()
 
 const UserContext = React.createContext()
 
-// class Provider extends Component {
-
-//   render() {
-//     return (
-//       <UserContext.Provider>
-//       {this.props.children}
-//       </UserContext.Provider>
-//     );
-//   }
-// }
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.toggleLogin = (token) => {
       localStorage.setItem("jwtToken", token);
-      console.log("Toggling Login")
       const decoded = jwt_decode(token);
 
       this.setState(state => ({
@@ -46,8 +34,6 @@ class App extends Component {
 
     this.toggleLogout = () => {
       localStorage.removeItem("jwtToken");
-      console.log("Logging out")
-      //const decoded = jwt_decode(token);
 
       this.setState(state => ({
         loggedIn: false,
@@ -56,13 +42,6 @@ class App extends Component {
     };
     
     let t = localStorage.jwtToken;
-    if(t){
-    console.log("rn t is "+t)
-
-    }else
-    {
-      console.log("no token")
-    }
     const tokenData = {
       token: t
     };
@@ -73,10 +52,7 @@ class App extends Component {
         body: JSON.stringify(tokenData)
     }
 
-
-    //if(decoded.exp*1000)
     if(t!=null){
-      console.log("hereee")
       const decoded = jwt_decode(t)
 
       const expDate = new Date(decoded.exp*1000)
@@ -85,14 +61,9 @@ class App extends Component {
         fetch('/api/users/refresh', requestOptions)
         .then(response => {
           const r = response.json()
-            if(response.ok){
-                console.log("Good")
-                //this.props.history.push("/login");
-            }
-            return r
+          return r
         })
         .then(data => {
-            console.log("Refresh Data is "+JSON.stringify(data))
             if(data.success){
               localStorage.setItem("jwtToken", data.token);
                
@@ -104,8 +75,6 @@ class App extends Component {
              return t
         })
         .then((t)=>{
-          console.log(t)
-
           if(this.state && this._ismounted){
             this.setState(state => ({
               loggedIn:localStorage.jwtToken ? true : false,
@@ -129,42 +98,10 @@ class App extends Component {
         toggleLogin: this.toggleLogin,
         toggleLogout: this.toggleLogout,
         token: t
-      }
-    
-    // const now = new Date()
-    // if(t&&jwt_decode(t).exp*1000 < now.getTime())
-    // {
-    //   console.log("expired")
-    //   localStorage.removeItem("jwtToken")
-    // }
-    // else
-    // {
-    //   console.log("not expired yet")
-    // }
-
-    //In backend,
-     // State also contains the updater function so it will
-    // be passed down into the context provider
-    
+      }  
   }
 
-
-
-
   render() {
-    // console.log("Currently stored exp date is ")
-    //  var created = ""
-    // var expires = ""
-    // var t = ""
-
-
-    // if(this.state.token){
-    //   created = new Date(jwt_decode(this.state.token).iat*1000)
-    //   expires = new Date(jwt_decode(this.state.token).exp*1000)
-    //   t = localStorage.jwtToken
-    // }
-
-   
     return (
       <LoginContext.Provider value={this.state}>
         <Router>
@@ -177,18 +114,6 @@ class App extends Component {
               <Route exact path="/fridge" component={FridgePage} />
               <Route path="/" component={PageNotFound} />
             </Switch>
-            {/* <LoginContext.Consumer>
-            {value => {
-              
-              return (
-                <div>
-                <p>{JSON.stringify(t)}</p>
-                <p>Created:{created.toString()}</p>
-                <p>Expire:{expires.toString()}</p>
-                </div>
-              )}
-            }
-            </LoginContext.Consumer> */}
           </div>
         </Router>
       </LoginContext.Provider>

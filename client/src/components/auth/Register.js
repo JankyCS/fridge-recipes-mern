@@ -35,8 +35,6 @@ class Register extends Component {
             password: this.state.password,
             password2: this.state.password2
             };
-        console.log(newUser);
-
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -47,7 +45,6 @@ class Register extends Component {
             .then(response => {
             const r = response.json()
                 if(response.ok){
-                    console.log("Good")
                     this.props.history.push("/login");
                 }
                 return r
@@ -57,7 +54,6 @@ class Register extends Component {
                     this.setState({ errors: data })
                 }
             })
-            //.catch(err => this.setState({ errors: err. }))
     };
 
 render() {
@@ -65,9 +61,7 @@ render() {
     this.props.history.push("/fridge");
   }
     const { errors } = this.state;
-    //console.log(JSON.stringify(errors))
     return (
-      // padding:"10vh 30vw"
       <div className="container-fluid poppin" style={{marginTop:"50px",maxWidth:"750px",width:"100%"}}>
         <div className="row">
           <div className="col-sm-12">
@@ -131,7 +125,6 @@ render() {
                   style={{
                     width: "150px",
                     borderRadius: "3px",
-                    // letterSpacing: "1.5px",
                     marginTop: "1rem"
                   }}
                   type="submit"

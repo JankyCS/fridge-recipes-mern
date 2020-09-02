@@ -26,7 +26,6 @@ onSubmit(e) {
       email: this.state.email,
       password: this.state.password
     };
-    console.log(userData);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -35,23 +34,15 @@ onSubmit(e) {
 
     fetch('/api/users/login', requestOptions)
         .then(response => {
-        const r = response.json()
-            if(response.ok){
-                console.log("Good")
-                //this.props.history.push("/login");
-            }
-            return r
+          const r = response.json()
+          return r
         })
         .then(data => {
-            if(true){
-                console.log("Data is "+JSON.stringify(data))
-                this.setState({ errors: data })
-                if(data.success==true){
-                    console.log("Signed in")
-                    toggleLogin(data.token)
-                     this.props.history.push("/fridge");
-                }
-            }
+          this.setState({ errors: data })
+          if(data.success==true){
+              toggleLogin(data.token)
+                this.props.history.push("/fridge");
+          }
         })
 
   };

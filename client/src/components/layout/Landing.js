@@ -14,7 +14,6 @@ class Landing extends Component {
       this.props.history.push("/fridge");
     }
     return (
-    //<Router>
       <div className="container-fluid poppin" >
         <div className="row align-items-center" style={{textAlign:"center",height:300,verticalAlign: "middle"}}>
             <div className="col-sm-5" style={{textAlign:"Left",padding:"10vh 5vw 0px 5vw"}}>
@@ -41,13 +40,11 @@ class Landing extends Component {
                 style={{
                   width: "140px",
                   borderRadius: "3px",
-                 
                 }}
                 className="btn btn-raised btn-secondary"
               >
                 Log In
               </Link>
-
             </div>
             <div className="col-sm-7 align-middle">
               <img src={mockup} alt="mockup" height="" style={
@@ -55,21 +52,13 @@ class Landing extends Component {
                 marginRight: "auto",
                 padding:"5vh 5vw 5vh 0px",
                 width: "100%",
-                // top: 0,
-                // left: 0,
-                // right: 0,
-                // bottom: 0,
                 }}/>
             </div>
           </div>
-          
         </div>
-    
-      //</Router>
     );
   }
 }
-
 
 Landing.contextType = LoginContext
 export default Landing;

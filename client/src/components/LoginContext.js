@@ -5,5 +5,4 @@ export const LoginContext = React.createContext({
   toggleLogin: (token) => {},
   toggleLogout: () => {},
   token:""
-  //user: {}
 });

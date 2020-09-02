@@ -1,26 +1,16 @@
 import React, { Component } from "react";
 import ingredientJSON from "../newIngredients.json"
 import ReactDOM from "react-dom"
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
-// import {LoginContext} from "../LoginContext";
 
 class Autocomplete extends Component {
-
     constructor(props){
         super(props)
-
         this.searchInput = React.createRef()
         this.ingredients = ingredientJSON.ingredients
         this.state = {
             suggestions: [],
             value: ""
         }
-
         this.onChange = this.onChange.bind(this)
         this.showSuggestions = this.showSuggestions.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -30,12 +20,9 @@ class Autocomplete extends Component {
 
     onChange(e){
         const ingredients = this.ingredients
-
-        console.log(ingredients[0]['name'])
         let value = e ? e.target.value :this.state.value
         value = value.replace(/[^a-zA-Z]/g, " ");
         this.setState({value}, () => {
-
             setTimeout(() => {
                 let suggestions = []
                 let first = []
@@ -43,7 +30,6 @@ class Autocomplete extends Component {
                 
                 if(value.length>0){
                     const regex = new RegExp(`${value}`,'i')
-                    //suggestions = ingredients.filter(v => regex.test(v))
                     for(let i=0 ;i<ingredients.length; i++)
                     {
                         if (ingredients[i]['name'].indexOf(value.toLowerCase()) == 0) {
@@ -57,7 +43,6 @@ class Autocomplete extends Component {
                         }
                     }
                 }
-                //suggestions = first.concat([])
                 let i = 0
                 while(first.length<7 && others.length>i){
                     first.push(others[i++])
@@ -89,13 +74,6 @@ class Autocomplete extends Component {
     onSubmit(e) {
         e.preventDefault();
         this.addToFridge(this.state.value)
-        //console.log(this.state.value)
-
-        //Add e.target.value to fridge, then reset state
-        
-
-        //Remove focus after use enters an ingredient 
-        //Maybe remove this? Keeping focus makes it easy to input many ingredients consecutively
         this.searchInput.current.blur()
     };
 
@@ -128,21 +106,14 @@ class Autocomplete extends Component {
   render() {
     
     return (
-    //<Router>
       <div >
         <form className="AutoCompleteText" noValidate onSubmit={this.onSubmit} style={{float:"left",marginBottom:20}}>
             <input ref={this.searchInput} value={this.state.value} onChange={this.onChange}type="text" onBlur={this.hideSuggestions}/> {/*onBlur={this.hideSuggestions}*/} 
-            {/* <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-                <small id="emailHelp" classname="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div> */}
             <a href="" className="material-icons addButton" onClick={this.onSubmit}>add_circle_outline</a>
             
             {this.showSuggestions()}    
         </form>
       </div>
-      //</Router>
     );
   }
 }

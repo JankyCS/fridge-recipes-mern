@@ -13,11 +13,7 @@ module.exports = function validateSignUp(data){
     if(Validator.isEmpty(data.name)){
         errors.name = "Name field is required"
     }
-    // //Username Validation
-    // if(Validator.isEmpty(data.username)){
-    //     errors.username = "Username field is required"
-    // }
-
+    
     //Email Validation
     if(Validator.isEmpty(data.email)){
         errors.email = "Email field is required"

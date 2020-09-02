@@ -74,41 +74,6 @@ class Navbar extends Component {
           </div>
         </div>
       </nav>
-      // <div className="navbar-fixed">
-      //   <nav className="z-depth-0">
-      //     <div className="nav-wrapper white">
-      //       <Link
-      //         to="/"
-      //         style={{
-      //           fontFamily: "monospace"
-      //         }}
-      //         className="col s5 brand-logo center black-text"
-      //       >
-      //       <img src={logo} alt="Logo" height="50px" style={{padding:10}}/>
-      //         {/* <i className="material-icons">fridge</i> */}
-              
-      //       </Link>
-      //       <LoginContext.Consumer>
-      //       {context => {
-      //           return (
-      //               <Link to="/login"
-      //               onClick={context.toggleLogout}
-      //               style={{
-      //               width: "140px",
-      //               borderRadius: "3px",
-      //               letterSpacing: "1.5px"
-      //               }}
-      //               className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-      //           >
-      //               Logout
-      //           </Link>
-      //           )
-      //       }}
-            
-      //         </LoginContext.Consumer>
-      //     </div>
-      //   </nav>
-      // </div>
     );
   }
 }

@@ -8,7 +8,7 @@ function RecipeCard(props) {
     let getAnotherImage=0;
 
     title = title.replace('&#233;','e')
-
+    title = title.replace('&amp;','&')
     useEffect(() => {
         setImage("")
        imageRequest()
@@ -27,19 +27,10 @@ function RecipeCard(props) {
       fetch('/api/recipe/image', requestOptions)
       .then(response => {
       const r = response.json()
-          if(response.ok){
-              //console.log("Good")
-              //this.props.history.push("/login");
-          }
-          return r
+        return r
       })
       .then(data => {
-          if(true){
-            //   console.log("Recipes is "+JSON.stringify(data))
-              setImage(data.imgUrl)
-              
-            //   console.log("thumbnail is"+thumbnail)
-        }
+        setImage(data.imgUrl)
       })
       .catch(err=>{
           console.log("Error is: "+err)
@@ -52,8 +43,7 @@ function RecipeCard(props) {
             <img className="card-img-top" src={image} alt="Card image cap" onError={()=>{console.log("Image error get another");setImage("https://www.helpguide.org/wp-content/uploads/table-with-grains-vegetables-fruit-768.jpg");}}/>
             <div className="card-body">
                 <h5 className="card-title">{title}</h5>
-                {/* {/* <p className="card-text" style={{textTransform: "capitalize"}}>Have: {used.toString()}.</p> */}
-                <p className="card-text" style={{textTransform: "capitalize"}}><b>Ingredients:</b> {ingredients.toString()}</p> 
+                <p className="card-text" style={{textTransform: "capitalize"}}><b>Ingredients: </b> {ingredients.toString()}</p> 
                 <a href={href} className="btn btn-primary" target="_blank">View Recipe</a>
             </div>
         </div>:
