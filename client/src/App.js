@@ -9,6 +9,8 @@ import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import FridgePage from "./components/layout/FridgePage";
+import PageNotFound from "./components/layout/PageNotFound";
+
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import {LoginContext} from "./components/LoginContext";
@@ -173,7 +175,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/fridge" component={FridgePage} />
-              <Route path="/" render={()=><p>404 Page not found</p>} />
+              <Route path="/" component={PageNotFound} />
             </Switch>
             {/* <LoginContext.Consumer>
             {value => {

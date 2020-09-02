@@ -191,7 +191,7 @@ class FridgePage extends Component {
             recipes: f
           }
         },()=>{
-          if(this.state.recipes.length<15){
+          if(this.state.recipes.length<5){
             this.getRecipes(p+1)
           }
         })

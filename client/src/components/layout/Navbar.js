@@ -19,7 +19,7 @@ class Navbar extends Component {
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
               <Link to="/" style={{}} className="navItem btn btn-large waves-effect waves-light hoverable blue accent-3 font-weight-bold">
-                <span class="navItem"><img src={logo} alt="Logo" height="22px" style={{padding:0}}/><span style={{fontWeight: 700}}> FRIDGE</span><span style={{fontWeight: 200}}>RECIPES</span></span>
+                <span className="navItem"><img src={logo} alt="Logo" height="22px" style={{padding:0}}/><span style={{fontWeight: 700}}> FRIDGE</span><span style={{fontWeight: 200}}>RECIPES</span></span>
               </Link>
             </li>
             <LoginContext.Consumer>
@@ -28,14 +28,14 @@ class Navbar extends Component {
                 return !context.loggedIn? (
                   <li className="nav-item active">
                     <Link to="/register" style={{}} className="navItem btn btn-large waves-effect waves-light hoverable blue accent-3 font-weight-bold">
-                      <span class="navItem" style={{}}>REGISTER</span>
+                      <span className="navItem" style={{}}>REGISTER</span>
                     </Link>
                   </li>
                 ):
                 (
                   <li className="nav-item active">
                     <Link to="/fridge" style={{}} className="navItem btn btn-large waves-effect waves-light hoverable blue accent-3 font-weight-bold">
-                      <span class="navItem">VIEW FRIDGE</span>
+                      <span className="navItem">VIEW FRIDGE</span>
                     </Link>
                   </li>
                 )
@@ -48,7 +48,7 @@ class Navbar extends Component {
                 return !context.loggedIn? (
                  <li className="nav-item">
                     <Link to="/login" style={{}} className="navItem btn btn-large waves-effect  blue accent-3 font-weight-bold">
-                      <span class="navItem" style={{}}>LOG IN</span>
+                      <span className="navItem" style={{}}>LOG IN</span>
                     </Link>
                   </li>
                 ): null
@@ -64,7 +64,7 @@ class Navbar extends Component {
               context => {
                 return context.loggedIn? (
                 <Link to="/" onClick={context.toggleLogout} style={{width: "140px", borderRadius: "3px",}} className="btn btn-large waves-effect waves-light hoverable blue accent-3 font-weight-bold">
-                <span class="navItem" style={{}}>LOG OUT &nbsp;</span>
+                <span className="navItem" style={{}}>LOG OUT &nbsp;</span>
                 <i className="material-icons md-18" style={{fontSize:"16px"}}>exit_to_app</i>
                 </Link>
                 ): null

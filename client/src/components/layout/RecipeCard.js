@@ -57,7 +57,7 @@ function RecipeCard(props) {
                 <a href={href} className="btn btn-primary" target="_blank">View Recipe</a>
             </div>
         </div>:
-        <div className="card" style={{display:"inline-block",height:"300px",width:"100%"}}>
+        <div className="card" style={{display:"inline-block",height:"500px",width:"100%"}}>
             <div className="d-flex align-center justify-content-center" style={{paddingTop:"130px"}}>
            <div className="spinner-border text-primary" role="status">
             <span className="sr-only">Loading...</span>
