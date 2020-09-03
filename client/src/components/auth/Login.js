@@ -107,8 +107,11 @@ class Login extends Component {
             {/* Errors */}
             <small className="form-text text-danger">
                   {errors.email}
+                  <br/>
                   {errors.emailnotfound}
+                  <br/>
                   {errors.password}
+                  <br/>
                   {errors.passwordincorrect}
             </small>
           </div>
