@@ -14,7 +14,7 @@ class Landing extends Component {
       <div className="container-fluid poppin" >
         <div className="row align-items-center" style={{textAlign:"center",height:300,verticalAlign: "middle"}}>
             <div className="col-lg-5" style={{textAlign:"Left",padding:"10vh 5vw 0px 5vw"}}>
-              <h1 style={{fontSize:50,fontWeight:700}}>Your Modern Day Fridge Management Assistant.</h1>
+              <h1 style={{fontSize:45,fontWeight:700}}>Your Modern Day Fridge Management Assistant.</h1>
               <p>FRIDGE RECIPES is your modern day recipe-management tool.
                 Find inspiration in the kitchen using what is already in your fridge.
                 <br/>
@@ -26,7 +26,8 @@ class Landing extends Component {
                 style={{
                   width: "140px",
                   borderRadius: "3px",
-                  marginRight:40
+                  marginRight:40,
+                  marginBottom:20
                 }}
                 className="btn btn-raised btn-primary"
               >
@@ -37,6 +38,7 @@ class Landing extends Component {
                 style={{
                   width: "140px",
                   borderRadius: "3px",
+                  marginBottom:20
                 }}
                 className="btn btn-raised btn-secondary"
               >
