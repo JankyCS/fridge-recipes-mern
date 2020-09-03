@@ -287,11 +287,13 @@ router.post("/edit-fridge", (req, res) => {
             .json({ error: "User not found" });
           }
           else{
+            console.log("User Has "+user.fridge.toString())
             let url = "http://www.recipepuppy.com/api/?i="+user.fridge.toString()+
                         "&p="+page
-            if(query!=""){
+            if(query&&query!=""){
               url=url+"&q="+query
-            }        
+            }
+            console.log(url)        
             fetch(url)
             .then(response => {
             const r = response.json()
