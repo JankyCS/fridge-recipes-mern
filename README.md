@@ -9,7 +9,7 @@ This is actually the second version of the app, built with the **MERN** stack. T
 ## How To Use 
 After registering and logging in on the website, users are prompted to a dashboard, where they can add items to their "fridge". These can be any food-items/ingredients found in the user's kitchen - they don't necessarily need to be refrigerated!
 
-Then, a page of recipes is automatically returned to the user, based on the ingredients they already have
+Then, a page of recipes is automatically returned to the user, based on the ingredients they already have.
 
 ![Edit Fridge Contents](https://i.ibb.co/N9B3q5f/fr2.png)
 
