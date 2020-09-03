@@ -169,7 +169,8 @@ class FridgePage extends Component {
 
   //Get recipes from backend
   getRecipePuppy(){
-    let p = Math.floor(Math.random() * 20)+1; 
+    let p = 1
+    // let p = Math.floor(Math.random() * 20)+1; 
     this.setState({recipes:[],msg:"Loading..."},()=>{this.getRecipes(p)})
   }
 

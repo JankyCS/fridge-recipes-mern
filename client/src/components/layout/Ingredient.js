@@ -9,7 +9,7 @@ function Ingredient(props) {
             <tbody>
                 <tr>
                 <td>
-                    <div className="card-text" style={{textTransform: "capitalize",height:"100%",display:"block",padding:"8px 10px", margin:0}}>
+                    <div className="card-text" style={{textTransform: "capitalize",display:"block",padding:"8px 10px", margin:0}}>
                         {props.name}
                     </div>
                 </td>
