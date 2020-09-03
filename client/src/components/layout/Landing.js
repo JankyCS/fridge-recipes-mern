@@ -13,7 +13,7 @@ class Landing extends Component {
     return (
       <div className="container-fluid poppin" >
         <div className="row align-items-center" style={{textAlign:"center",height:300,verticalAlign: "middle"}}>
-            <div className="col-sm-5" style={{textAlign:"Left",padding:"10vh 5vw 0px 5vw"}}>
+            <div className="col-lg-5" style={{textAlign:"Left",padding:"10vh 5vw 0px 5vw"}}>
               <h1 style={{fontSize:50,fontWeight:700}}>Your Modern Day Fridge Management Assistant.</h1>
               <p>FRIDGE RECIPES is your modern day recipe-management tool.
                 Find inspiration in the kitchen using what is already in your fridge.
@@ -43,7 +43,7 @@ class Landing extends Component {
                 Log In
               </Link>
             </div>
-            <div className="col-sm-7 align-middle">
+            <div className="col-lg-7 align-middle">
               <img src={mockup} alt="mockup" style={
                 {marginLeft: "auto",
                 marginRight: "auto",
