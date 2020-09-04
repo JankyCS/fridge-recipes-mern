@@ -21,3 +21,7 @@ This project is built with the **MERN** stack. THe frontend is built with **Boot
 User passwords are secured/encrypted with **bpcrytJS**, and authentication is facilitated with the **PassportJS** middleware, with the **Javascript Web Token** strategy.
 
 The recipes are obtained with the [Recipe Puppy API](http://www.recipepuppy.com/about/api/)
+
+## License & Copyright
+
+Licensed under the MIT [License](LICENSE)
