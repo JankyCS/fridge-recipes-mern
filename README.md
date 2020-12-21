@@ -16,7 +16,7 @@ Then, a page of recipes is automatically returned to the user, based on the ingr
 The recipes are dynamically, and automatically generated as the user's fridge is updated, which helps to streamline the process.
 
 ## How It Works/Technologies Used
-This project is built with the **MERN** stack. THe frontend is built with **Bootstrap** and **ReactJS**. The **Express** server acts as a backend and uses **Mongoose** to model users for communicating with the **MongoDB database**. 
+This project is built with the **MERN** stack. The frontend is built with **Bootstrap** and **ReactJS**. The **Express** server acts as a backend and uses **Mongoose** to model users for communicating with the **MongoDB database**. 
 
 User passwords are secured/encrypted with **bpcrytJS**, and authentication is facilitated with the **PassportJS** middleware, with the **Javascript Web Token** strategy.
 
