@@ -20,7 +20,7 @@ class PageNotFound extends Component {
                 </Link>
                 ):
                 (
-                <Link to="/fridge" onClick={context.toggleLogout} style={{borderRadius: "3px",}} className="btn btn-primary">
+                <Link to="/fridge" onClick={context.toggleIn} style={{borderRadius: "3px",}} className="btn btn-primary">
                 <span>Return to Fridge</span>
                 </Link>
                 )
