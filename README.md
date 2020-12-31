@@ -4,7 +4,7 @@ Fridge recipes is a modern day fridge-management, recipe-discovery tool to help 
 
 ![Landing Page](https://i.ibb.co/XYjVnRC/fr1.png)
 
-This is actually the second version of the app, built with the **MERN** stack. This new version of the app was an oppourtunity to play around with **ReactJS**, while also brushing up on **Mongo, Node, and Express** [Check out the first version of the app here!](https://github.com/JankyCS/fridge-recipes)
+This is actually the second version of the app, built with the **MERN** stack. This new version of the app was an opportunity to play around with **ReactJS**, while also brushing up on **Mongo, Node, and Express** [Check out the first version of the app here!](https://github.com/JankyCS/fridge-recipes)
 
 ## How To Use 
 After registering and logging in on the website, users are prompted to a dashboard, where they can add items to their "fridge". These can be any food-items/ingredients found in the user's kitchen - they don't necessarily need to be refrigerated!
