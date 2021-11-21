@@ -1,3 +1,6 @@
+# BROKEN FOR NOW
+The API used to retrieve recipe information is down. I will replace it with some other recipe API at some point but for now Fridge Recipes is broken
+
 # Welcome to Fridge Recipes!
 Fridge recipes is a modern day fridge-management, recipe-discovery tool to help users save money, minimize food waste, and get inspired in the kitchen. Try it out [here](https://fridgerecipes.herokuapp.com)!
 
